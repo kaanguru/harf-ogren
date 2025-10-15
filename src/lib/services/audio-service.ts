@@ -16,7 +16,10 @@ export class AudioService {
 	}
 
 	async playLetterSound(letterId: string, language: 'ar' | 'ru'): Promise<void> {
-		const audioPath = `/audio/letters/${language}/${letterId}.mp3`;
+		// Import the mapping function dynamically to avoid circular dependencies
+		const { getAudioFileName } = await import('$lib/models/alphabet-definition');
+		const audioFileName = getAudioFileName(language, letterId);
+		const audioPath = `/audio/letters/${language}/${audioFileName}.mp3`;
 
 		try {
 			await this.playAudio(audioPath);

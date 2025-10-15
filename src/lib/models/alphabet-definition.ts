@@ -60,7 +60,7 @@ export const alphabets: Record<'ar' | 'ru', Alphabet> = {
 			{ id: 'zh', symbol: 'Ж', name: 'Je' },
 			{ id: 'z', symbol: 'З', name: 'Ze' },
 			{ id: 'i', symbol: 'И', name: 'İ' },
-			{ id: 'y', symbol: 'Й', name: 'Y' },
+			{ id: 'y-short', symbol: 'Й', name: 'Y' },
 			{ id: 'k', symbol: 'К', name: 'Ka' },
 			{ id: 'l', symbol: 'Л', name: 'El' },
 			{ id: 'm', symbol: 'М', name: 'Em' },
@@ -97,4 +97,77 @@ export function getLetter(language: 'ar' | 'ru', letterId: string): Letter | und
 
 export function getTotalLetters(language: 'ar' | 'ru'): number {
 	return alphabets[language].letters.length;
+}
+
+export function getAudioFileName(language: 'ar' | 'ru', letterId: string): string {
+	const audioFileMap: Record<string, Record<string, string>> = {
+		ar: {
+			alif: '001-alif',
+			ba: '002-ba',
+			ta: '003-taa',
+			tha: '004-tha',
+			jim: '005-jeem',
+			ha: '006-haa',
+			kha: '007-khaa',
+			dal: '008-dal',
+			dhal: '009-dhal',
+			ra: '010-raa',
+			zay: '011-jaa',
+			sin: '012-seen',
+			shin: '013-sheen',
+			sad: '014-saad',
+			dad: '015-dhaad',
+			taa: '016-toa',
+			zaa: '017-dhaa',
+			ayn: '018-ain',
+			ghayn: '019-ghain',
+			fa: '020-faa',
+			qaf: '021-qaaf',
+			kaf: '022-kaaf',
+			lam: '023-laam',
+			mim: '024-meem',
+			nun: '025-noon',
+			haa: '027-ha',
+			waw: '026-waw',
+			ya: '029-yaa'
+		},
+		ru: {
+			// Russian letters would use simple IDs since they don't have numeric prefixes
+			a: 'a',
+			b: 'b',
+			v: 'v',
+			g: 'g',
+			d: 'd',
+			ye: 'ye',
+			yo: 'yo',
+			zh: 'zh',
+			z: 'z',
+			i: 'i',
+			'y-short': 'y-short',
+			k: 'k',
+			l: 'l',
+			m: 'm',
+			n: 'n',
+			o: 'o',
+			p: 'p',
+			r: 'r',
+			s: 's',
+			t: 't',
+			u: 'u',
+			f: 'f',
+			kh: 'kh',
+			ts: 'ts',
+			ch: 'ch',
+			sh: 'sh',
+			shch: 'shch',
+			'hard-sign': 'hard-sign',
+			y: 'y',
+			'soft-sign': 'soft-sign',
+			e: 'e',
+			yu: 'yu',
+			ya: 'ya'
+		}
+	};
+
+	return audioFileMap[language]?.[letterId] || letterId;
 }

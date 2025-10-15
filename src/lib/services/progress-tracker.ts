@@ -12,9 +12,11 @@ export class ProgressTracker {
 
 	private loadProgress(): void {
 		try {
-			const stored = localStorage.getItem(STORAGE_KEY);
-			if (stored) {
-				this.progress = JSON.parse(stored);
+			if (typeof localStorage !== 'undefined') {
+				const stored = localStorage.getItem(STORAGE_KEY);
+				if (stored) {
+					this.progress = JSON.parse(stored);
+				}
 			}
 		} catch (error) {
 			console.error('Error loading progress from localStorage:', error);
@@ -23,7 +25,7 @@ export class ProgressTracker {
 	}
 
 	private saveProgress(): void {
-		if (this.progress) {
+		if (this.progress && typeof localStorage !== 'undefined') {
 			try {
 				localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
 			} catch (error) {
@@ -61,7 +63,9 @@ export class ProgressTracker {
 	}
 
 	clearAllProgress(): void {
-		localStorage.removeItem(STORAGE_KEY);
+		if (typeof localStorage !== 'undefined') {
+			localStorage.removeItem(STORAGE_KEY);
+		}
 		this.progress = null;
 	}
 

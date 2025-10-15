@@ -3,7 +3,8 @@
 	"provider": {
 		"openrouter": {
 			"models": {
-				"deepseek/deepseek-v3.2-exp": {}
+				"deepseek/deepseek-v3.2-exp": {},
+				"z-ai/glm-4-32b": {}
 			}
 		}
 	},

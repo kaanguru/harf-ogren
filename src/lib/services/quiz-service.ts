@@ -1,4 +1,9 @@
-import { getAlphabet, getLetter, type Letter } from '$lib/models/alphabet-definition';
+import {
+	getAlphabet,
+	getLetter,
+	getAudioFileName,
+	type Letter
+} from '$lib/models/alphabet-definition';
 import { AudioService } from '$lib/services/audio-service';
 
 export interface QuizQuestion {
@@ -33,7 +38,7 @@ export class QuizService {
 		return {
 			correctLetter,
 			options,
-			audioFile: `/audio/letters/${language}/${correctLetter.id}.mp3`
+			audioFile: `/audio/letters/${language}/${getAudioFileName(language, correctLetter.id)}.mp3`
 		};
 	}
 

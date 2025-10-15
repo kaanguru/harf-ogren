@@ -3,6 +3,7 @@
 	import { QuizService } from '$lib/services/quiz-service';
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
+	import { onMount } from 'svelte';
 
 	export let language: 'ar' | 'ru';
 	export let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
@@ -132,7 +133,7 @@
 						class={`rounded-lg border-2 p-4 text-center transition-all duration-200 ${getOptionClass(option.id)} ${selectedOption ? '' : 'cursor-pointer hover:shadow-md'}`}
 					>
 						<div class="mb-2 text-3xl font-bold">{option.symbol}</div>
-						<div class="text-sm text-gray-600">{option.name}</div>
+						<!-- <div class=" text-gray-200">{option.name}</div> -->
 					</button>
 				{/each}
 			</div>
