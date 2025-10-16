@@ -49,7 +49,9 @@
 							d="M15 19l-7-7 7-7"
 						/>
 					</svg>
-					{UI_TEXT.back}
+					<span class="sm:hidden md:hidden lg:block">
+						{UI_TEXT.back}
+					</span>
 				</button>
 
 				<!-- Page Title -->

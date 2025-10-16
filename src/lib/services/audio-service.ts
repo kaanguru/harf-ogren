@@ -1,17 +1,18 @@
 export class AudioService {
 	private audioContext: AudioContext | null = null;
 	private volume = 1;
+	private audioContextInitialized = false;
 
-	constructor() {
-		// Initialize audio context when user interacts with the page
-		this.initializeAudioContext();
-	}
+	private async ensureAudioContext(): Promise<void> {
+		if (this.audioContextInitialized) return;
 
-	private initializeAudioContext(): void {
 		try {
-			this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+			this.audioContext = new (window.AudioContext ||
+				(window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
+			this.audioContextInitialized = true;
 		} catch (error) {
 			console.error('AudioContext not supported:', error);
+			this.audioContextInitialized = true; // Mark as initialized even if failed
 		}
 	}
 
@@ -23,7 +24,7 @@ export class AudioService {
 
 		try {
 			await this.playAudio(audioPath);
-		} catch (error) {
+		} catch {
 			console.warn(`Audio file not found: ${audioPath}. Using fallback.`);
 			// Fallback: Use Web Speech API for pronunciation
 			await this.speakLetter(letterId, language);
@@ -31,6 +32,9 @@ export class AudioService {
 	}
 
 	private async playAudio(url: string): Promise<void> {
+		// Ensure AudioContext is initialized before playing audio
+		await this.ensureAudioContext();
+
 		return new Promise((resolve, reject) => {
 			const audio = new Audio(url);
 			audio.volume = this.volume;
@@ -49,6 +53,9 @@ export class AudioService {
 	}
 
 	private async speakLetter(letterId: string, language: 'ar' | 'ru'): Promise<void> {
+		// Ensure AudioContext is initialized before using speech synthesis
+		await this.ensureAudioContext();
+
 		if (!('speechSynthesis' in window)) {
 			console.warn('Speech synthesis not supported');
 			return;
