@@ -40,6 +40,8 @@
 	}
 
 	function nextQuestion() {
+		// Stop any currently playing audio before loading next question
+		quizService.stopQuestionAudio();
 		currentQuestion = quizService.getNextQuestion(language, difficulty);
 		selectedOption = null;
 		isCorrect = null;

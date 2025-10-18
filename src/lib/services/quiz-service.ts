@@ -92,6 +92,10 @@ export class QuizService {
 		await this.audioService.playLetterSound(letterId, language);
 	}
 
+	stopQuestionAudio(): void {
+		this.audioService.stopAll();
+	}
+
 	validateAnswer(question: QuizQuestion, selectedLetterId: string): boolean {
 		return question.correctLetter.id === selectedLetterId;
 	}

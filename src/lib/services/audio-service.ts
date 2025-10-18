@@ -2,6 +2,7 @@ export class AudioService {
 	private audioContext: AudioContext | null = null;
 	private volume = 1;
 	private audioContextInitialized = false;
+	private currentAudio: HTMLAudioElement | null = null;
 
 	private async ensureAudioContext(): Promise<void> {
 		if (this.audioContextInitialized) return;
@@ -36,14 +37,23 @@ export class AudioService {
 		await this.ensureAudioContext();
 
 		return new Promise((resolve, reject) => {
+			// Stop any currently playing audio
+			this.stopAudio();
+
 			const audio = new Audio(url);
+			this.currentAudio = audio;
 			audio.volume = this.volume;
 
 			audio.addEventListener('loadeddata', () => {
 				audio.play().then(resolve).catch(reject);
 			});
 
+			audio.addEventListener('ended', () => {
+				this.currentAudio = null;
+			});
+
 			audio.addEventListener('error', () => {
+				this.currentAudio = null;
 				reject(new Error(`Failed to load audio: ${url}`));
 			});
 
@@ -165,7 +175,16 @@ export class AudioService {
 		return this.volume;
 	}
 
+	stopAudio(): void {
+		if (this.currentAudio) {
+			this.currentAudio.pause();
+			this.currentAudio.currentTime = 0;
+			this.currentAudio = null;
+		}
+	}
+
 	stopAll(): void {
+		this.stopAudio();
 		speechSynthesis.cancel();
 	}
 }
