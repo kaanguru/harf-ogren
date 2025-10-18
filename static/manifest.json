@@ -10,6 +10,7 @@
   "orientation": "portrait",
   "categories": ["education", "language", "learning"],
   "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "pwa-64x64.png",
