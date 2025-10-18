@@ -14,6 +14,9 @@ importers:
       canvas:
         specifier: ^3.2.0
         version: 3.2.0
+      lucide-svelte:
+        specifier: ^0.546.0
+        version: 0.546.0(svelte@5.41.0)
       vite-plugin-pwa:
         specifier: ^1.1.0
         version: 1.1.0(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(workbox-build@7.3.0)(workbox-window@7.3.0)
@@ -22,16 +25,16 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(eslint@9.38.0(jiti@2.6.1))
       '@eslint/js':
-        specifier: ^9.37.0
+        specifier: ^9.38.0
         version: 9.38.0
       '@playwright/test':
-        specifier: ^1.56.0
+        specifier: ^1.56.1
         version: 1.56.1
       '@sveltejs/adapter-auto':
         specifier: ^6.1.1
         version: 6.1.1(@sveltejs/kit@2.47.1(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.41.0)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)))(svelte@5.41.0)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)))
       '@sveltejs/kit':
-        specifier: ^2.47.0
+        specifier: ^2.47.1
         version: 2.47.1(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.41.0)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)))(svelte@5.41.0)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))
       '@sveltejs/vite-plugin-svelte':
         specifier: ^6.2.1
@@ -43,13 +46,13 @@ importers:
         specifier: ^4.1.14
         version: 4.1.14(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))
       '@types/node':
-        specifier: ^22.18.10
+        specifier: ^22.18.11
         version: 22.18.11
       '@vitest/browser':
         specifier: ^3.2.4
         version: 3.2.4(playwright@1.56.1)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0))(vitest@3.2.4)
       eslint:
-        specifier: ^9.37.0
+        specifier: ^9.38.0
         version: 9.38.0(jiti@2.6.1)
       eslint-config-prettier:
         specifier: ^10.1.8
@@ -64,7 +67,7 @@ importers:
         specifier: ^0.12.6
         version: 0.12.6(svelte@5.41.0)
       playwright:
-        specifier: ^1.56.0
+        specifier: ^1.56.1
         version: 1.56.1
       prettier:
         specifier: ^3.6.2
@@ -76,7 +79,7 @@ importers:
         specifier: ^0.6.14
         version: 0.6.14(prettier-plugin-svelte@3.4.0(prettier@3.6.2)(svelte@5.41.0))(prettier@3.6.2)
       svelte:
-        specifier: ^5.40.1
+        specifier: ^5.41.0
         version: 5.41.0
       svelte-check:
         specifier: ^4.3.3
@@ -2234,6 +2237,11 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lucide-svelte@0.546.0:
+    resolution: {integrity: sha512-vCvBUlFapD59ivX1b/i7wdUadSgC/3gQGvrGEZjSecOlThT+UR+X5UxdVEakHuhniTrSX0nJ2WrY5r25SVDtyQ==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -5466,6 +5474,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-svelte@0.546.0(svelte@5.41.0):
+    dependencies:
+      svelte: 5.41.0
 
   lz-string@1.5.0: {}
 

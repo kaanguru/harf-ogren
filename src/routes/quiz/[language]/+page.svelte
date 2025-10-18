@@ -5,6 +5,7 @@
 	import { getAlphabet } from '$lib/models/alphabet-definition';
 	import Quiz from '$lib/components/Quiz.svelte';
 	import { UI_TEXT } from '$lib/utils/constants';
+	import { ArrowLeft } from 'lucide-svelte';
 
 	let language: 'ar' | 'ru' = 'ar';
 	let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
@@ -31,7 +32,7 @@
 	$: alphabet = getAlphabet(language);
 </script>
 
-<div class="quiz-page min-h-screen bg-gray-50">
+<div class="quiz-page min-h-screen bg-orange-50">
 	<!-- Header -->
 	<header class="border-b border-gray-200 bg-white shadow-sm">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -41,14 +42,7 @@
 					class="flex items-center text-gray-600 transition-colors hover:text-gray-900"
 					on:click={goBack}
 				>
-					<svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 19l-7-7 7-7"
-						/>
-					</svg>
+					<ArrowLeft class="mr-2 h-5 w-5" />
 					<span class="sm:hidden md:hidden lg:block">
 						{UI_TEXT.back}
 					</span>
@@ -62,19 +56,19 @@
 				<!-- Difficulty Selector -->
 				<div class="flex gap-2">
 					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'easy' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'easy' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
 						on:click={() => setDifficulty('easy')}
 					>
 						Kolay
 					</button>
 					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'medium' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'medium' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
 						on:click={() => setDifficulty('medium')}
 					>
 						Orta
 					</button>
 					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'hard' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'hard' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
 						on:click={() => setDifficulty('hard')}
 					>
 						Zor

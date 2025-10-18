@@ -19,7 +19,7 @@ export const alphabets: Record<'ar' | 'ru', Alphabet> = {
 			{ id: 'alif', symbol: 'ا', name: 'Elif' },
 			{ id: 'ba', symbol: 'ب', name: 'Be' },
 			{ id: 'ta', symbol: 'ت', name: 'Te' },
-			{ id: 'tha', symbol: 'ث', name: 'Se' },
+			{ id: 'tha', symbol: 'ث', name: 'TSe' },
 			{ id: 'jim', symbol: 'ج', name: 'Cim' },
 			{ id: 'ha', symbol: 'ح', name: 'Ha' },
 			{ id: 'kha', symbol: 'خ', name: 'Hı' },

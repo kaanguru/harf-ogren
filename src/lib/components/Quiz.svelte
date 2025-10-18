@@ -4,6 +4,7 @@
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { onMount } from 'svelte';
+	import { Volume2, RotateCcw } from 'lucide-svelte';
 
 	export let language: 'ar' | 'ru';
 	export let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
@@ -63,7 +64,7 @@
 
 	function getOptionClass(letterId: string) {
 		if (!selectedOption) {
-			return 'bg-white hover:bg-gray-50 border-gray-200';
+			return 'bg-white hover:bg-orange-50 border-gray-200';
 		}
 
 		if (letterId === currentQuestion?.correctLetter.id) {
@@ -74,7 +75,7 @@
 			return 'bg-red-100 border-red-400 text-red-800';
 		}
 
-		return 'bg-gray-100 border-gray-200 text-gray-500';
+		return 'bg-orange-100 border-gray-200 text-gray-500';
 	}
 
 	onMount(() => {
@@ -106,20 +107,14 @@
 				<button
 					on:click={playQuestionAudio}
 					disabled={isLoading}
-					class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 disabled:bg-blue-400"
+					class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-3 text-white transition-colors hover:bg-sky-700 disabled:bg-sky-400"
 				>
 					{#if isLoading}
 						<div
 							class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
 						></div>
 					{:else}
-						<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								fill-rule="evenodd"
-								d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						<Volume2 class="h-5 w-5" />
 					{/if}
 					{UI_TEXT.playSound}
 				</button>
@@ -144,7 +139,7 @@
 			{#if showResult}
 				<div class="mt-6 text-center">
 					{#if isCorrect}
-						<div class="mb-4 text-lg font-semibold text-green-600">✓ Doğru! Tebrikler!</div>
+						<div class="mb-4 text-lg font-semibold text-sky-500">✓ Doğru! Tebrikler!</div>
 					{:else}
 						<div class="mb-4 text-lg font-semibold text-red-600">
 							✗ Yanlış! Doğru cevap: {currentQuestion.correctLetter.symbol} ({currentQuestion
@@ -154,9 +149,10 @@
 
 					<button
 						on:click={nextQuestion}
-						class="rounded-lg bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
+						class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
 					>
-						Sonraki Soru →
+						<RotateCcw class="h-4 w-4" />
+						Sonraki Soru
 					</button>
 				</div>
 			{/if}

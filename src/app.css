@@ -1,2 +1,49 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+/* Font definitions */
+:root {
+	--font-body: 'Oldenburg', serif;
+	--font-heading: 'Uncial Antiqua', serif;
+}
+
+/* Apply fonts globally */
+body {
+	font-family: var(--font-body);
+}
+
+h1,
+h2 {
+	font-family: var(--font-heading);
+}
+/* CSS HEX */
+--barn-red: #780000ff;
+/* red-900 */
+--fire-brick: #c1121fff;
+/* red-700 */
+--papaya-whip: #fdf0d5ff;
+/* orange-100 */
+--prussian-blue: #003049ff;
+/* sky-950 */
+--air-superiority-blue: #669bbcff;
+/* sky-500 */
+
+/* Logo styling */
+.logo-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2rem 0;
+}
+
+.logo {
+	max-width: 200px;
+	height: auto;
+}
+
+/* On larger screens, allow the logo to be a bit bigger */
+@media (min-width: 768px) {
+	.logo {
+		max-width: 300px;
+	}
+}

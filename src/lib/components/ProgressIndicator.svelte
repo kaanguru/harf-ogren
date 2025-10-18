@@ -3,6 +3,7 @@
 	import { getTotalLetters } from '$lib/models/alphabet-definition';
 	import { resetProgress } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
+	import { Trash2 } from 'lucide-svelte';
 
 	export let language: 'ar' | 'ru';
 
@@ -29,15 +30,19 @@
 <div class="progress-indicator rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
 	<div class="mb-4 flex items-center justify-between">
 		<h3 class="text-lg font-semibold text-gray-800">{UI_TEXT.progressTitle}</h3>
-		<button class="text-sm font-medium text-red-600 hover:text-red-700" on:click={handleReset}>
-			{UI_TEXT.resetProgress}
+		<button
+			class="flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-700"
+			on:click={handleReset}
+		>
+			<Trash2 class="h-4 w-4" />
+			<!-- {UI_TEXT.resetProgress} -->
 		</button>
 	</div>
 
 	<!-- Progress Stats -->
 	<div class="mb-4 grid grid-cols-3 gap-4">
 		<div class="text-center">
-			<div class="text-2xl font-bold text-blue-600">{learnedCount}</div>
+			<div class="text-2xl font-bold text-sky-950">{learnedCount}</div>
 			<div class="text-sm text-gray-600">{UI_TEXT.learnedLetters}</div>
 		</div>
 		<div class="text-center">
@@ -45,15 +50,15 @@
 			<div class="text-sm text-gray-600">{UI_TEXT.totalLetters}</div>
 		</div>
 		<div class="text-center">
-			<div class="text-2xl font-bold text-green-600">{progressPercentage}%</div>
+			<div class="text-2xl font-bold text-sky-500">{progressPercentage}%</div>
 			<div class="text-sm text-gray-600">{UI_TEXT.progressPercentage}</div>
 		</div>
 	</div>
 
 	<!-- Progress Bar -->
-	<div class="mb-4 h-3 w-full rounded-full bg-gray-200">
+	<div class="mb-4 h-3 w-full rounded-full bg-orange-200">
 		<div
-			class="h-3 rounded-full bg-green-500 transition-all duration-300"
+			class="h-3 rounded-full bg-sky-500 transition-all duration-300"
 			style="width: {progressPercentage}%"
 		></div>
 	</div>
@@ -76,7 +81,7 @@
 						Evet
 					</button>
 					<button
-						class="flex-1 rounded bg-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-400"
+						class="flex-1 rounded bg-orange-300 px-4 py-2 text-gray-700 transition-colors hover:bg-orange-400"
 						on:click={cancelReset}
 					>
 						Hayır

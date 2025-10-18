@@ -3,6 +3,7 @@
 	import { setLanguage } from '$lib/stores/progress.store';
 	import { goto } from '$app/navigation';
 	import { UI_TEXT } from '$lib/utils/constants';
+	import { Play, ArrowRight } from 'lucide-svelte';
 
 	function selectLanguage(language: 'ar' | 'ru') {
 		setLanguage(language);
@@ -10,7 +11,7 @@
 	}
 </script>
 
-<div class="language-selector flex min-h-screen items-center justify-center bg-gray-50 p-4">
+<div class="language-selector flex min-h-screen items-center justify-center bg-orange-50 p-4">
 	<div class="w-full max-w-md">
 		<!-- App Header -->
 		<div class="mb-8 text-center">
@@ -39,7 +40,7 @@
 								{UI_TEXT.letters.toLowerCase()}
 							</p>
 						</div>
-						<div class="text-3xl text-blue-600">
+						<div class="text-3xl text-sky-950">
 							{#if key === 'ar'}
 								<span class="font-arabic">ا</span>
 							{:else}
@@ -47,8 +48,9 @@
 							{/if}
 						</div>
 					</div>
-					<div class="mt-4 text-sm font-medium text-blue-600">
-						{UI_TEXT.startLearning} →
+					<div class="mt-4 flex items-center justify-between text-sm font-medium text-sky-950">
+						<span>{UI_TEXT.startLearning}</span>
+						<ArrowRight class="h-4 w-4" />
 					</div>
 				</button>
 			{/each}

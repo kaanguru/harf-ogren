@@ -3,8 +3,9 @@
 	"provider": {
 		"openrouter": {
 			"models": {
-				"deepseek/deepseek-v3.2-exp": {},
-				"z-ai/glm-4-32b": {}
+				"qwen/qwen3-coder-30b-a3b-instruct": {},
+				"qwen/qwen3-coder:free": {},
+				"agentica-org/deepcoder-14b-preview:free": {}
 			}
 		}
 	},

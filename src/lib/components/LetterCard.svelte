@@ -4,6 +4,7 @@
 	import { AudioService } from '$lib/services/audio-service';
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
+	import { Volume2 } from 'lucide-svelte';
 
 	export let letter: Letter;
 	export let language: 'ar' | 'ru';
@@ -45,7 +46,7 @@
 	<!-- Learned Indicator -->
 	{#if learned}
 		<div
-			class="absolute top-2 right-2 h-3 w-3 rounded-full bg-green-500"
+			class="absolute top-2 right-2 h-3 w-3 rounded-full bg-sky-500"
 			title={UI_TEXT.learned}
 		></div>
 	{/if}
@@ -63,7 +64,7 @@
 	<!-- Status Badge -->
 	<div class="text-center text-xs">
 		{#if learned}
-			<span class="font-medium text-green-600">{UI_TEXT.learned}</span>
+			<span class="font-medium text-sky-500">{UI_TEXT.learned}</span>
 		{:else}
 			<span class="text-gray-500">{UI_TEXT.notLearned}</span>
 		{/if}
