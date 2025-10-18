@@ -74,7 +74,7 @@
 				<!-- Instructions -->
 				<div class="mt-6 rounded-lg border border-blue-200 bg-sky-50 p-4">
 					<h3 class="mb-2 text-sm font-semibold text-blue-800">Nasıl Kullanılır?</h3>
-					<ul class="space-y-1 text-sm text-blue-700">
+					<ul class="space-y-1 text-sm text-sky-700">
 						<li>• Harfe tıklayarak sesini dinleyin</li>
 						<li>• Öğrendiğiniz harfler yeşil olarak işaretlenecek</li>
 						<li>• İlerlemeniz otomatik olarak kaydedilir</li>
