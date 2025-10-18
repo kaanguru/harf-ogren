@@ -17,17 +17,20 @@ h1,
 h2 {
 	font-family: var(--font-heading);
 }
-/* CSS HEX */
---barn-red: #780000ff;
-/* red-900 */
---fire-brick: #c1121fff;
-/* red-700 */
---papaya-whip: #fdf0d5ff;
-/* orange-100 */
---prussian-blue: #003049ff;
-/* sky-950 */
---air-superiority-blue: #669bbcff;
-/* sky-500 */
+
+/* CSS HEX colors */
+:root {
+	--barn-red: #780000ff;
+	/* red-900 */
+	--fire-brick: #c1121fff;
+	/* red-700 */
+	--papaya-whip: #fdf0d5ff;
+	/* orange-100 */
+	--prussian-blue: #003049ff;
+	/* sky-950 */
+	--air-superiority-blue: #669bbcff;
+	/* sky-500 */
+}
 
 /* Logo styling */
 .logo-container {

@@ -5,7 +5,7 @@
 	import { getAlphabet } from '$lib/models/alphabet-definition';
 	import Quiz from '$lib/components/Quiz.svelte';
 	import { UI_TEXT } from '$lib/utils/constants';
-	import { ArrowLeft } from 'lucide-svelte';
+	import PageLayout from '$lib/components/PageLayout.svelte';
 
 	let language: 'ar' | 'ru' = 'ar';
 	let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
@@ -32,54 +32,16 @@
 	$: alphabet = getAlphabet(language);
 </script>
 
-<div class="quiz-page min-h-screen bg-orange-50">
-	<!-- Header -->
-	<header class="border-b border-gray-200 bg-white shadow-sm">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="flex h-16 items-center justify-between">
-				<!-- Back Button -->
-				<button
-					class="flex items-center text-gray-600 transition-colors hover:text-gray-900"
-					on:click={goBack}
-				>
-					<ArrowLeft class="mr-2 h-5 w-5" />
-					<span class="sm:hidden md:hidden lg:block">
-						{UI_TEXT.back}
-					</span>
-				</button>
-
-				<!-- Page Title -->
-				<h1 class="text-xl font-semibold text-gray-800">
-					{alphabet.name} Quiz
-				</h1>
-
-				<!-- Difficulty Selector -->
-				<div class="flex gap-2">
-					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'easy' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
-						on:click={() => setDifficulty('easy')}
-					>
-						Kolay
-					</button>
-					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'medium' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
-						on:click={() => setDifficulty('medium')}
-					>
-						Orta
-					</button>
-					<button
-						class={`rounded px-3 py-1 text-sm transition-colors ${difficulty === 'hard' ? 'bg-sky-950 text-white' : 'bg-orange-200 text-gray-700 hover:bg-orange-300'}`}
-						on:click={() => setDifficulty('hard')}
-					>
-						Zor
-					</button>
-				</div>
-			</div>
-		</div>
-	</header>
-
-	<!-- Main Content -->
-	<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+<PageLayout
+	title={`${alphabet.name} Quiz`}
+	onBack={goBack}
+	rightContent="difficulty-selector"
+	{difficulty}
+	onDifficultyChange={setDifficulty}
+	onQuizStart={undefined}
+	hasSidebar={false}
+>
+	<div slot="main">
 		<Quiz {language} {difficulty} />
-	</main>
-</div>
+	</div>
+</PageLayout>

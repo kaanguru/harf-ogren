@@ -14,6 +14,9 @@ importers:
       canvas:
         specifier: ^3.2.0
         version: 3.2.0
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
       lucide-svelte:
         specifier: ^0.546.0
         version: 0.546.0(svelte@5.41.0)
@@ -1468,6 +1471,9 @@ packages:
 
   caniuse-lite@1.0.30001751:
     resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   canvas@3.2.0:
     resolution: {integrity: sha512-jk0GxrLtUEmW/TmFsk2WghvgHe8B0pxGilqCL21y8lHkPUGa6FTsnCNtHPOzT8O3y+N+m3espawV80bbBlgfTA==}
@@ -4674,6 +4680,8 @@ snapshots:
   callsites@3.1.0: {}
 
   caniuse-lite@1.0.30001751: {}
+
+  canvas-confetti@1.9.3: {}
 
   canvas@3.2.0:
     dependencies:

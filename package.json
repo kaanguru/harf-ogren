@@ -49,6 +49,7 @@
 	"dependencies": {
 		"@vite-pwa/sveltekit": "^1.0.1",
 		"canvas": "^3.2.0",
+		"canvas-confetti": "^1.9.3",
 		"lucide-svelte": "^0.546.0",
 		"vite-plugin-pwa": "^1.1.0"
 	}

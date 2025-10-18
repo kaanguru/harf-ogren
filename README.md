@@ -1,28 +1,33 @@
-# sv
+# Harf-Öğren - Simplified Turkish PWA
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A Progressive Web App for studying Arabic and Russian letters, designed with a mobile-first approach.
 
-## Creating a project
+## Project Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+Harf-Öğren is a SvelteKit Progressive Web App (PWA) built with:
+- **SvelteKit 5** framework with TypeScript
+- **Tailwind CSS** for styling
+- **Netlify adapter** for deployment
+- **Responsive layout** optimized for mobile devices
+- **Audio files** for Arabic and Russian letter pronunciation
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Features
 
-# create a new project in my-app
-npx sv create my-app
-```
+- Language selection (Arabic/Russian)
+- Interactive letter grid with audio playback
+- Basic progress tracking
+- PWA offline capability for learning without internet
+- Mobile-first responsive design
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies with `pnpm install`, start a development server:
 
 ```sh
-npm run dev
+pnpm run dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm run dev -- --open
 ```
 
 ## Building
@@ -30,9 +35,9 @@ npm run dev -- --open
 To create a production version of your app:
 
 ```sh
-npm run build
+pnpm run build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with `pnpm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+> The app is configured for deployment to Netlify with offline capability.

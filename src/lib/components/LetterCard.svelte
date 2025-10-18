@@ -4,7 +4,7 @@
 	import { AudioService } from '$lib/services/audio-service';
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
-	import { Volume2 } from 'lucide-svelte';
+	import { Volume2, CheckCircle, Circle } from 'lucide-svelte';
 
 	export let letter: Letter;
 	export let language: 'ar' | 'ru';
@@ -63,11 +63,11 @@
 	</div>
 
 	<!-- Status Badge -->
-	<div class="text-center text-xs">
+	<div class="text-center">
 		{#if learned}
-			<span class="font-medium text-sky-500">{UI_TEXT.learned}</span>
+			<CheckCircle size={16} class="text-sky-500 inline" />
 		{:else}
-			<span class="text-gray-500">{UI_TEXT.notLearned}</span>
+			<Circle size={16} class="text-gray-400 inline" />
 		{/if}
 	</div>
 

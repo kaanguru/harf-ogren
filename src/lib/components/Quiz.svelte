@@ -5,6 +5,7 @@
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { onMount } from 'svelte';
 	import { Volume2, RotateCcw } from 'lucide-svelte';
+	import confetti from 'canvas-confetti';
 
 	export let language: 'ar' | 'ru';
 	export let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
@@ -28,16 +29,30 @@
 	function selectOption(letterId: string) {
 		if (selectedOption || !currentQuestion) return;
 
+		// Stop the question audio when an option is selected
+		quizService.stopQuestionAudio();
+
 		selectedOption = letterId;
 		isCorrect = quizService.validateAnswer(currentQuestion, letterId);
 
 		if (isCorrect) {
 			score++;
 			markLetterLearned(currentQuestion.correctLetter.id);
+			// Add confetti effect for correct answers
+			triggerConfetti();
+			// Play the confetti sound for correct answers
+			playConfettiSound();
 		}
 
 		questionsAnswered++;
 		showResult = true;
+	}
+
+	function playConfettiSound() {
+		const audio = new Audio('/audio/confetti-fade-in.mp3');
+		audio.play().catch((error) => {
+			console.error('Failed to play confetti sound:', error);
+		});
 	}
 
 	function nextQuestion() {
@@ -76,6 +91,21 @@
 		}
 
 		return 'bg-orange-100 border-gray-200 text-gray-500';
+	}
+
+	function triggerConfetti() {
+		confetti({
+			particleCount: 150,
+			spread: 70,
+			origin: { y: 0.6 },
+			colors: [
+				'#780000', // barn-red
+				'#c1121f', // fire-brick
+				'#fdf0d5', // papaya-whip
+				'#669bbc', // air-superiority-blue
+				'#003049' // prussian-blue
+			]
+		});
 	}
 
 	onMount(() => {
