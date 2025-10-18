@@ -11,19 +11,19 @@
 	}
 </script>
 
-<div class="language-selector flex min-h-screen items-center justify-center bg-orange-50 p-4">
+<div class="language-selector flex items-center justify-center bg-orange-50 p-4">
 	<div class="w-full max-w-md">
 		<!-- App Header -->
 		<div class="mb-8 text-center">
-			<h1 class="mb-2 text-4xl font-bold text-gray-800">{UI_TEXT.appTitle}</h1>
+			<!-- <h2 class="mb-2 text-4xl font-bold text-gray-800">{UI_TEXT.appTitle}</h2> -->
 			<p class="text-gray-600">{UI_TEXT.appDescription}</p>
 		</div>
 
 		<!-- Language Selection Cards -->
 		<div class="space-y-4">
-			<h2 class="mb-6 text-center text-xl font-semibold text-gray-700">
+			<!-- <h2 class="mb-6 text-center text-xl font-semibold text-gray-700">
 				{UI_TEXT.selectLanguage}
-			</h2>
+			</h2> -->
 
 			{#each Object.entries(alphabets) as [key, alphabet]}
 				<button

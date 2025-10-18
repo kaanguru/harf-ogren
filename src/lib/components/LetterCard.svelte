@@ -9,7 +9,8 @@
 	export let letter: Letter;
 	export let language: 'ar' | 'ru';
 
-	const audioService = new AudioService();
+	// Use a singleton instance to ensure audio stops properly between letters
+	const audioService = AudioService.getInstance();
 	let isLoading = false;
 
 	async function playSound() {

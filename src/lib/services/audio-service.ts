@@ -4,6 +4,20 @@ export class AudioService {
 	private audioContextInitialized = false;
 	private currentAudio: HTMLAudioElement | null = null;
 
+	// Singleton instance
+	private static instance: AudioService;
+
+	// Private constructor to prevent direct instantiation
+	private constructor() {}
+
+	// Method to get the singleton instance
+	public static getInstance(): AudioService {
+		if (!AudioService.instance) {
+			AudioService.instance = new AudioService();
+		}
+		return AudioService.instance;
+	}
+
 	private async ensureAudioContext(): Promise<void> {
 		if (this.audioContextInitialized) return;
 

@@ -7,6 +7,7 @@
 	import ProgressIndicator from '$lib/components/ProgressIndicator.svelte';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { ArrowLeft, CheckCircle } from 'lucide-svelte';
+	import { AudioService } from '$lib/services/audio-service';
 
 	let language: 'ar' | 'ru' = 'ar';
 
@@ -26,6 +27,9 @@
 	}
 
 	function goToQuiz() {
+		// Stop any currently playing audio
+		const audioService = AudioService.getInstance();
+		audioService.stopAll();
 		goto('/quiz/' + language);
 	}
 
@@ -42,8 +46,8 @@
 					class="flex items-center text-gray-600 transition-colors hover:text-gray-900"
 					on:click={goBack}
 				>
-					<ArrowLeft class="mr-2 h-5 w-5" />
-					{UI_TEXT.back}
+					<ArrowLeft class="mr-3 h-5 w-5" />
+					<!-- <span class="sm:hidden md:hidden">{UI_TEXT.back}</span> -->
 				</button>
 
 				<!-- Page Title -->

@@ -90,7 +90,6 @@
 <div class="quiz-container mx-auto max-w-2xl p-6">
 	<!-- Quiz Header -->
 	<div class="mb-8 text-center">
-		<h2 class="mb-2 text-2xl font-bold text-gray-800">Quiz</h2>
 		<div class="flex justify-center gap-4 text-sm text-gray-600">
 			<span>Skor: {score}/{questionsAnswered}</span>
 			<span
