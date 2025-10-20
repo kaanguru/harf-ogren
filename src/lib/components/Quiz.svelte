@@ -18,12 +18,18 @@
 	let score = 0;
 	let questionsAnswered = 0;
 	let showResult = false;
+	let quizCompleted = false;
+	// Set a fixed number of questions for a quiz session
+	const totalQuestionsInSet = 10; // Can be changed based on requirements
 
 	function initializeQuiz() {
 		currentQuestion = quizService.getNextQuestion(language, difficulty);
 		selectedOption = null;
 		isCorrect = null;
 		showResult = false;
+		score = 0;
+		questionsAnswered = 0;
+		quizCompleted = false;
 	}
 
 	function selectOption(letterId: string) {
@@ -38,30 +44,27 @@
 		if (isCorrect) {
 			score++;
 			markLetterLearned(currentQuestion.correctLetter.id);
-			// Add confetti effect for correct answers
-			triggerConfetti();
-			// Play the confetti sound for correct answers
-			playConfettiSound();
 		}
 
 		questionsAnswered++;
 		showResult = true;
 	}
 
-	function playConfettiSound() {
-		const audio = new Audio('/audio/confetti-fade-in.mp3');
-		audio.play().catch((error) => {
-			console.error('Failed to play confetti sound:', error);
-		});
-	}
-
 	function nextQuestion() {
 		// Stop any currently playing audio before loading next question
 		quizService.stopQuestionAudio();
-		currentQuestion = quizService.getNextQuestion(language, difficulty);
-		selectedOption = null;
-		isCorrect = null;
-		showResult = false;
+		
+		// Check if we've reached the end of the quiz set
+		if (questionsAnswered >= totalQuestionsInSet) {
+			quizCompleted = true;
+			// Trigger confetti for completing the quiz set
+			triggerFullConfetti();
+		} else {
+			currentQuestion = quizService.getNextQuestion(language, difficulty);
+			selectedOption = null;
+			isCorrect = null;
+			showResult = false;
+		}
 	}
 
 	async function playQuestionAudio() {
@@ -93,18 +96,70 @@
 		return 'bg-orange-100 border-gray-200 text-gray-500';
 	}
 
-	function triggerConfetti() {
+	function triggerFullConfetti() {
+		// Play the celebration sound for completing the set
+		playSetCompletionSound();
+		
+		// More elaborate confetti for completing a set
 		confetti({
-			particleCount: 150,
-			spread: 70,
+			particleCount: 300,
+			spread: 180,
 			origin: { y: 0.6 },
+			startVelocity: 50,
+			gravity: 0.5,
+			drift: -0.5,
+			ticks: 200,
+			zIndex: 1000,
 			colors: [
 				'#780000', // barn-red
 				'#c1121f', // fire-brick
 				'#fdf0d5', // papaya-whip
 				'#669bbc', // air-superiority-blue
-				'#003049' // prussian-blue
+				'#003049', // prussian-blue
+				'#2a9d8f', // teal
+				'#e9c46a', // golden
+				'#f4a261'  // orange
 			]
+		});
+		
+		// Add a second burst for more effect
+		setTimeout(() => {
+			confetti({
+				particleCount: 150,
+				angle: 60,
+				spread: 70,
+				origin: { x: 0 },
+				colors: [
+					'#780000', 
+					'#c1121f', 
+					'#fdf0d5', 
+					'#669bbc', 
+					'#003049'
+				]
+			});
+		}, 150);
+		
+		setTimeout(() => {
+			confetti({
+				particleCount: 150,
+				angle: 120,
+				spread: 70,
+				origin: { x: 1 },
+				colors: [
+					'#780000', 
+					'#c1121f', 
+					'#fdf0d5', 
+					'#669bbc', 
+					'#003049'
+				]
+			});
+		}, 300);
+	}
+	
+	function playSetCompletionSound() {
+		const audio = new Audio('/audio/confetti-fade-in.mp3');
+		audio.play().catch((error) => {
+			console.error('Failed to play set completion sound:', error);
 		});
 	}
 
@@ -167,22 +222,39 @@
 			<!-- Result Feedback -->
 			{#if showResult}
 				<div class="mt-6 text-center">
-					{#if isCorrect}
-						<div class="mb-4 text-lg font-semibold text-sky-500">✓ Doğru! Tebrikler!</div>
-					{:else}
-						<div class="mb-4 text-lg font-semibold text-red-600">
-							✗ Yanlış! Doğru cevap: {currentQuestion.correctLetter.symbol} ({currentQuestion
-								.correctLetter.name})
+					{#if quizCompleted}
+						<div class="mb-6">
+							<div class="text-2xl font-bold text-sky-600 mb-2">🎉 Tebrikler!</div>
+							<div class="text-lg text-gray-700 mb-2">Quiz Setini Tamamladınız!</div>
+							<div class="text-md text-gray-600">
+								Skor: {score}/{totalQuestionsInSet} ({Math.round((score/totalQuestionsInSet)*100)}%)
+							</div>
+							<button
+								on:click={initializeQuiz}
+								class="mt-4 inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-3 text-white transition-colors hover:bg-sky-700"
+							>
+								<RotateCcw class="h-5 w-5" />
+								Yeni Quiz Başlat
+							</button>
 						</div>
-					{/if}
+					{:else}
+						{#if isCorrect}
+							<div class="mb-4 text-lg font-semibold text-sky-500">✓ Doğru! Tebrikler!</div>
+						{:else}
+							<div class="mb-4 text-lg font-semibold text-red-600">
+								✗ Yanlış! Doğru cevap: {currentQuestion.correctLetter.symbol} ({currentQuestion
+									.correctLetter.name})
+							</div>
+						{/if}
 
-					<button
-						on:click={nextQuestion}
-						class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
-					>
-						<RotateCcw class="h-4 w-4" />
-						Sonraki Soru
-					</button>
+						<button
+							on:click={nextQuestion}
+							class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
+						>
+							<RotateCcw class="h-4 w-4" />
+							Sonraki Soru
+						</button>
+					{/if}
 				</div>
 			{/if}
 		</div>

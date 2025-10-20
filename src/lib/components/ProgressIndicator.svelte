@@ -40,21 +40,21 @@
 	</div>
 
 	<!-- Progress Stats -->
-	<div class="mb-4 grid grid-cols-3 gap-4">
+	<div class="mb-4 grid grid-cols-2 gap-4">
 		<div class="text-center">
 			<div class="text-2xl font-bold text-sky-950">{learnedCount}</div>
 			<div class="text-sm text-gray-600">{UI_TEXT.learnedLetters}</div>
 		</div>
-		<div class="text-center">
-			<div class="text-2xl font-bold text-gray-700">{totalLetters}</div>
-			<div class="text-sm text-gray-600">{UI_TEXT.totalLetters}</div>
-		</div>
+
 		<div class="text-center">
 			<div class="text-2xl font-bold text-sky-500">{progressPercentage}%</div>
 			<div class="text-sm text-gray-600">{UI_TEXT.progressPercentage}</div>
 		</div>
 	</div>
-
+	<div class="text-center">
+		<div class="text-xl font-bold text-gray-700">{totalLetters}</div>
+		<div class="text-xsm text-gray-600">{UI_TEXT.totalLetters}</div>
+	</div>
 	<!-- Progress Bar -->
 	<div class="mb-4 h-3 w-full rounded-full bg-orange-200">
 		<div
