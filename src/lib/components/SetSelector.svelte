@@ -11,7 +11,7 @@
 	}
 </script>
 
-<div class="language-selector flex items-center justify-center bg-orange-50 p-4">
+<div class="set-selector flex items-center justify-center bg-orange-50 p-4">
 	<div class="w-full max-w-md">
 		<!-- App Header -->
 		<div class="mb-8 text-center">
@@ -19,7 +19,7 @@
 			<p class="text-gray-600">{UI_TEXT.appDescription}</p>
 		</div>
 
-		<!-- Language Selection Cards -->
+		<!-- Set Selection Cards -->
 		<div class="space-y-4">
 			<!-- <h2 class="mb-6 text-center text-xl font-semibold text-gray-700">
 				{UI_TEXT.selectLanguage}
@@ -27,7 +27,7 @@
 
 			{#each Object.entries(alphabets) as [key, alphabet]}
 				<button
-					class="language-card w-full rounded-lg border border-gray-200 bg-white p-6 text-left shadow-sm transition-all duration-200 hover:shadow-md"
+					class="set-card w-full rounded-lg border border-gray-200 bg-white p-6 text-left shadow-sm transition-all duration-200 hover:shadow-md"
 					on:click={() => selectSet(key as 'ar' | 'ru' | 'ot' | 'fa')}
 				>
 					<div class="flex items-center justify-between">
@@ -58,17 +58,17 @@
 
 		<!-- Instructions -->
 		<div class="mt-8 text-center text-sm text-gray-500">
-			<p>Bir alfabe seçerek öğrenmeye başlayın</p>
+			<p>Bir alfabe seti seçerek öğrenmeye başlayın</p>
 		</div>
 	</div>
 </div>
 
 <style>
-	.language-card:hover {
+	.set-card:hover {
 		transform: translateY(-2px);
 	}
 
-	.language-card:active {
+	.set-card:active {
 		transform: translateY(0px);
 	}
 

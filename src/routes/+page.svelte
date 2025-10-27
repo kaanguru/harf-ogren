@@ -1,12 +1,12 @@
 <script>
-	import LanguageSelector from '$lib/components/LanguageSelector.svelte';
+	import SetSelector from '$lib/components/SetSelector.svelte';
 </script>
 
 <div class="logo-container">
 	<img src="/harf-ogren-logo.png" alt="Harf Öğren Logo" class="logo" />
 </div>
 
-<LanguageSelector />
+<SetSelector />
 
 <style>
 	.logo-container {

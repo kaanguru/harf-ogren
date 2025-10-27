@@ -13,8 +13,8 @@ export const UI_TEXT = {
 	selectLanguage: 'Dil Seçin',
 	arabic: 'Arapça',
 	russian: 'Rusça',
-	ottoman: 'Osmanlıca',
-	persian: 'Farsça',
+	ottoman: 'Osmanlıca Harfler',
+	persian: 'Farsça Harfler',
 	startLearning: 'Öğrenmeye Başla',
 
 	// Learning Interface

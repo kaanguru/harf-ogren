@@ -87,7 +87,7 @@ export const alphabets: Record<'ar' | 'ru' | 'ot' | 'fa', Alphabet> = {
 	},
 	ot: {
 		id: 'ot',
-		name: 'Osmanlıca',
+		name: 'Osmanlıca Harfler',
 		letters: [
 			// Ottoman Turkish letters
 			{ id: 'alef', symbol: 'ا', name: 'Alef' },
@@ -127,7 +127,7 @@ export const alphabets: Record<'ar' | 'ru' | 'ot' | 'fa', Alphabet> = {
 	},
 	fa: {
 		id: 'fa',
-		name: 'Farsça',
+		name: 'Farsça Harfler',
 		letters: [
 			// Persian letters
 			{ id: 'alef', symbol: 'ا', name: 'Alef' },

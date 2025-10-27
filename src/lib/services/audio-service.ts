@@ -40,10 +40,67 @@ export class AudioService {
 		try {
 			await this.playAudio(audioPath);
 		} catch {
-			console.warn(`Audio file not found: ${audioPath}. Using fallback.`);
+			console.warn(`Audio file not found: ${audioPath}.`);
+			
+			// For Ottoman Turkish, try Arabic audio as fallback for shared letters
+			if (setId === 'ot') {
+				const arabicAudioPath = await this.getArabicAudioFallbackPath(letterId);
+				if (arabicAudioPath) {
+					try {
+						await this.playAudio(arabicAudioPath);
+						return;
+					} catch {
+						console.warn(`Arabic fallback audio not found: ${arabicAudioPath}. Using speech synthesis.`);
+					}
+				}
+			}
+			
 			// Fallback: Use Web Speech API for pronunciation
 			await this.speakLetter(letterId, setId);
 		}
+	}
+	
+	private async getArabicAudioFallbackPath(letterId: string): Promise<string | null> {
+		// Map Ottoman Turkish letter IDs to their Arabic equivalent IDs to find matching audio files
+		const otToArabicMap: Record<string, string> = {
+			'alef': 'alif',   // alef -> alif
+			'beh': 'ba',      // beh -> ba
+			'te': 'ta',       // te -> ta
+			'se': 'tha',      // se -> tha
+			'jeem': 'jim',    // jeem -> jim
+			'hah': 'ha',      // hah -> ha
+			'khah': 'kha',    // khah -> kha
+			'dal': 'dal',     // dal -> dal
+			'dhal': 'dhal',   // dhal -> dhal
+			're': 'ra',       // re -> ra
+			'ze': 'zay',      // ze -> zay
+			'seen': 'sin',    // seen -> sin
+			'sheen': 'shin',  // sheen -> shin
+			'sad': 'sad',     // sad -> sad
+			'dad': 'dad',     // dad -> dad
+			'tah': 'taa',     // tah -> taa
+			'zah': 'zaa',     // zah -> zaa
+			'ain': 'ayn',     // ain -> ayn
+			'ghain': 'ghayn', // ghain -> ghayn
+			'fe': 'fa',       // fe -> fa
+			'qaf': 'qaf',     // qaf -> qaf
+			'kaf': 'kaf',     // kaf -> kaf
+			'lam': 'lam',     // lam -> lam
+			'mim': 'mim',     // mim -> mim
+			'nun': 'nun',     // nun -> nun
+			'vav': 'waw',     // vav -> waw
+			'he': 'haa',      // he -> haa
+			'ye': 'ya'        // ye -> ya
+		};
+
+		const arabicLetterId = otToArabicMap[letterId];
+		if (arabicLetterId) {
+			const { getAudioFileName } = await import('$lib/models/alphabet-definition');
+			const arabicAudioFileName = getAudioFileName('ar', arabicLetterId);
+			return `/audio/letters/ar/${arabicAudioFileName}.ogg`;
+		}
+		
+		return null;
 	}
 
 	private async playAudio(url: string): Promise<void> {
@@ -51,28 +108,39 @@ export class AudioService {
 		await this.ensureAudioContext();
 
 		return new Promise((resolve, reject) => {
-			// Stop any currently playing audio
-			this.stopAudio();
+			try {
+				// Stop any currently playing audio
+				this.stopAudio();
 
-			const audio = new Audio(url);
-			this.currentAudio = audio;
-			audio.volume = this.volume;
+				const audio = new Audio(url);
+				this.currentAudio = audio;
+				audio.volume = this.volume;
 
-			audio.addEventListener('loadeddata', () => {
-				audio.play().then(resolve).catch(reject);
-			});
+				audio.addEventListener('loadeddata', () => {
+					audio.play().then(resolve).catch(reject);
+				});
 
-			audio.addEventListener('ended', () => {
+				audio.addEventListener('ended', () => {
+					// Only clear currentAudio if it's the same instance we started
+					if (this.currentAudio === audio) {
+						this.currentAudio = null;
+					}
+				});
+
+				audio.addEventListener('error', () => {
+					// Only clear currentAudio if it's the same instance we started
+					if (this.currentAudio === audio) {
+						this.currentAudio = null;
+					}
+					reject(new Error(`Failed to load audio: ${url}`));
+				});
+
+				// Preload the audio
+				audio.load();
+			} catch (error) {
 				this.currentAudio = null;
-			});
-
-			audio.addEventListener('error', () => {
-				this.currentAudio = null;
-				reject(new Error(`Failed to load audio: ${url}`));
-			});
-
-			// Preload the audio
-			audio.load();
+				reject(new Error(`Failed to create audio element: ${error instanceof Error ? error.message : 'Unknown error'}`));
+			}
 		});
 	}
 
@@ -85,31 +153,39 @@ export class AudioService {
 			return;
 		}
 
-		return new Promise((resolve) => {
-			const utterance = new SpeechSynthesisUtterance();
+		return new Promise((resolve, reject) => {
+			try {
+				const utterance = new SpeechSynthesisUtterance();
 
-			// Set language and text based on letter
-			if (setId === 'ar' || setId === 'ot') {
-				// Arabic and Ottoman Turkish both use Arabic script and similar pronunciation
-				utterance.lang = 'ar-SA';
-				utterance.text = this.getArabicLetterName(letterId);
-			} else if (setId === 'fa') {
-				utterance.lang = 'fa-IR';
-				utterance.text = this.getPersianLetterName(letterId);
-			} else {
-				// Russian
-				utterance.lang = 'ru-RU';
-				utterance.text = this.getRussianLetterName(letterId);
+				// Set language and text based on letter
+				if (setId === 'ar' || setId === 'ot') {
+					// Arabic and Ottoman Turkish both use Arabic script and similar pronunciation
+					utterance.lang = 'ar-SA';
+					utterance.text = this.getArabicLetterName(letterId);
+				} else if (setId === 'fa') {
+					utterance.lang = 'fa-IR';
+					utterance.text = this.getPersianLetterName(letterId);
+				} else {
+					// Russian
+					utterance.lang = 'ru-RU';
+					utterance.text = this.getRussianLetterName(letterId);
+				}
+
+				utterance.volume = this.volume;
+				utterance.rate = 0.8;
+				utterance.pitch = 1;
+
+				utterance.onend = () => resolve();
+				utterance.onerror = (event) => {
+					console.warn('Speech synthesis error:', event);
+					resolve(); // Don't reject on error, continue execution
+				};
+
+				speechSynthesis.speak(utterance);
+			} catch (error) {
+				console.warn('Error during speech synthesis:', error);
+				resolve(); // Continue execution even if speech fails
 			}
-
-			utterance.volume = this.volume;
-			utterance.rate = 0.8;
-			utterance.pitch = 1;
-
-			utterance.onend = () => resolve();
-			utterance.onerror = () => resolve(); // Don't reject on error
-
-			speechSynthesis.speak(utterance);
 		});
 	}
 

@@ -15,7 +15,7 @@
 		{UI_TEXT.letters}
 	</h3> -->
 
-	<div class="letter-grid grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+	<div class="letter-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
 		{#each alphabet.letters as letter (letter.id)}
 			<LetterCard {letter} {setId} />
 		{/each}
@@ -27,12 +27,10 @@
 		max-width: 800px;
 		margin: 0 auto;
 		padding: 0 1rem;
+		width: 100%;
 	}
 
-	@media (max-width: 640px) {
-		.letter-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 0.75rem;
-		}
+	.letter-grid {
+		width: 100%;
 	}
 </style>

@@ -14,15 +14,15 @@
 	$: {
 		const params = $page.params;
 		if (
-			params.language === 'ar' ||
-			params.language === 'ru' ||
-			params.language === 'ot' ||
-			params.language === 'fa'
+			params.setId === 'ar' ||
+			params.setId === 'ru' ||
+			params.setId === 'ot' ||
+			params.setId === 'fa'
 		) {
-			setId = params.language as 'ar' | 'ru' | 'ot' | 'fa';
+			setId = params.setId as 'ar' | 'ru' | 'ot' | 'fa';
 			currentSetId.set(setId);
 		} else {
-			// Invalid language parameter, redirect to home
+			// Invalid setId parameter, redirect to home
 			goto('/');
 		}
 	}

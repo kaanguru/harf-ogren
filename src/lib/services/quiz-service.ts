@@ -53,11 +53,15 @@ export class QuizService {
 		difficulty: 'easy' | 'medium' | 'hard'
 	): Letter[] {
 		const numOptions = this.getNumberOfOptions(difficulty);
+		const maxWrongOptions = numOptions - 1; // Subtract 1 for the correct answer
 		const wrongLetters = allLetters.filter((letter) => letter.id !== correctLetter.id);
+		
+		// Ensure we don't request more options than available
+		const requiredWrongOptions = Math.min(maxWrongOptions, wrongLetters.length);
 
 		const selectedWrongLetters: Letter[] = [];
 
-		while (selectedWrongLetters.length < numOptions - 1 && wrongLetters.length > 0) {
+		while (selectedWrongLetters.length < requiredWrongOptions && wrongLetters.length > 0) {
 			const randomIndex = Math.floor(Math.random() * wrongLetters.length);
 			selectedWrongLetters.push(wrongLetters[randomIndex]);
 			wrongLetters.splice(randomIndex, 1);
@@ -80,12 +84,16 @@ export class QuizService {
 	}
 
 	private shuffleArray<T>(array: T[]): T[] {
-		const shuffled = [...array];
-		for (let i = shuffled.length - 1; i > 0; i--) {
+		// Create a copy of the array to avoid mutating the original
+		const result = [...array];
+		
+		// Fisher-Yates shuffle algorithm
+		for (let i = result.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+			[result[i], result[j]] = [result[j], result[i]];
 		}
-		return shuffled;
+		
+		return result;
 	}
 
 	async playQuestionAudio(setId: 'ar' | 'ru' | 'ot' | 'fa', letterId: string): Promise<void> {
