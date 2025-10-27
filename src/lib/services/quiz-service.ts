@@ -38,7 +38,7 @@ export class QuizService {
 		return {
 			correctLetter,
 			options,
-			audioFile: `/audio/letters/${setId}/${getAudioFileName(setId, correctLetter.id)}.mp3`
+			audioFile: `/audio/letters/${setId}/${getAudioFileName(setId, correctLetter.id)}.ogg`
 		};
 	}
 

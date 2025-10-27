@@ -158,7 +158,7 @@
 	}
 
 	function playSetCompletionSound() {
-		const audio = new Audio('/audio/confetti-fade-in.mp3');
+		const audio = new Audio('/audio/confetti-fade-in.ogg');
 		audio.play().catch((error) => {
 			console.error('Failed to play set completion sound:', error);
 		});

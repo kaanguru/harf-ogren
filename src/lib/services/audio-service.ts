@@ -35,7 +35,7 @@ export class AudioService {
 		// Import the mapping function dynamically to avoid circular dependencies
 		const { getAudioFileName } = await import('$lib/models/alphabet-definition');
 		const audioFileName = getAudioFileName(setId, letterId);
-		const audioPath = `/audio/letters/${setId}/${audioFileName}.mp3`;
+		const audioPath = `/audio/letters/${setId}/${audioFileName}.ogg`;
 
 		try {
 			await this.playAudio(audioPath);
