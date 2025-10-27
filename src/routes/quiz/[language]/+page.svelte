@@ -1,20 +1,25 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { currentLanguage } from '$lib/stores/progress.store';
+	import { currentSetId } from '$lib/stores/progress.store';
 	import { getAlphabet } from '$lib/models/alphabet-definition';
 	import Quiz from '$lib/components/Quiz.svelte';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import PageLayout from '$lib/components/PageLayout.svelte';
 
-	let language: 'ar' | 'ru' = 'ar';
+	let setId: 'ar' | 'ru' | 'ot' | 'fa' = 'ar';
 	let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
 
 	$: {
 		const params = $page.params;
-		if (params.language === 'ar' || params.language === 'ru') {
-			language = params.language;
-			currentLanguage.set(language);
+		if (
+			params.language === 'ar' ||
+			params.language === 'ru' ||
+			params.language === 'ot' ||
+			params.language === 'fa'
+		) {
+			setId = params.language as 'ar' | 'ru' | 'ot' | 'fa';
+			currentSetId.set(setId);
 		} else {
 			// Invalid language parameter, redirect to home
 			goto('/');
@@ -22,14 +27,14 @@
 	}
 
 	function goBack() {
-		goto('/learn/' + language);
+		goto('/learn/' + setId);
 	}
 
 	function setDifficulty(newDifficulty: 'easy' | 'medium' | 'hard') {
 		difficulty = newDifficulty;
 	}
 
-	$: alphabet = getAlphabet(language);
+	$: alphabet = getAlphabet(setId);
 </script>
 
 <PageLayout
@@ -42,6 +47,6 @@
 	hasSidebar={false}
 >
 	<div slot="main">
-		<Quiz {language} {difficulty} />
+		<Quiz {setId} {difficulty} />
 	</div>
 </PageLayout>

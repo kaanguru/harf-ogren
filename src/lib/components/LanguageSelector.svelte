@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { alphabets } from '$lib/models/alphabet-definition';
-	import { setLanguage } from '$lib/stores/progress.store';
+	import { setSetId } from '$lib/stores/progress.store';
 	import { goto } from '$app/navigation';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { Play, ArrowRight } from 'lucide-svelte';
 
-	function selectLanguage(language: 'ar' | 'ru') {
-		setLanguage(language);
-		goto(`/learn/${language}`);
+	function selectSet(setId: 'ar' | 'ru' | 'ot' | 'fa') {
+		setSetId(setId);
+		goto(`/learn/${setId}`);
 	}
 </script>
 
@@ -28,7 +28,7 @@
 			{#each Object.entries(alphabets) as [key, alphabet]}
 				<button
 					class="language-card w-full rounded-lg border border-gray-200 bg-white p-6 text-left shadow-sm transition-all duration-200 hover:shadow-md"
-					on:click={() => selectLanguage(key as 'ar' | 'ru')}
+					on:click={() => selectSet(key as 'ar' | 'ru' | 'ot' | 'fa')}
 				>
 					<div class="flex items-center justify-between">
 						<div>
@@ -58,7 +58,7 @@
 
 		<!-- Instructions -->
 		<div class="mt-8 text-center text-sm text-gray-500">
-			<p>Bir dil seçerek öğrenmeye başlayın</p>
+			<p>Bir alfabe seçerek öğrenmeye başlayın</p>
 		</div>
 	</div>
 </div>

@@ -5,7 +5,7 @@
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { Trash2 } from 'lucide-svelte';
 
-	export let language: 'ar' | 'ru';
+	export let setId: 'ar' | 'ru' | 'ot' | 'fa';
 
 	let showResetConfirm = false;
 
@@ -22,7 +22,7 @@
 		showResetConfirm = false;
 	}
 
-	$: totalLetters = getTotalLetters(language);
+	$: totalLetters = getTotalLetters(setId);
 	$: learnedCount = $userProgress?.learnedLetters.length || 0;
 	$: progressPercentage = totalLetters > 0 ? Math.round((learnedCount / totalLetters) * 100) : 0;
 </script>

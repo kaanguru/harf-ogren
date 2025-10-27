@@ -5,10 +5,11 @@
 The Harf-Öğren project is a SvelteKit Progressive Web App (PWA) currently live at `https://harf-ogren.netlify.app/`. The project has:
 
 - **SvelteKit 5** framework with TypeScript
-- **Tailwind CSS** for styling
+- **Tailwind CSS** v4.1 for styling
 - **Netlify adapter** for deployment
 - **Basic PWA structure** with responsive layout
 - **Arabic letter audio files** already available
+- **Russian letter audio files** already available
 
 ## Scope Definition
 

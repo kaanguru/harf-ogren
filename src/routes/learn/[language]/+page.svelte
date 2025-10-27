@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { currentLanguage, userProgress } from '$lib/stores/progress.store';
+	import { currentSetId, userProgress } from '$lib/stores/progress.store';
 	import { getAlphabet } from '$lib/models/alphabet-definition';
 	import LetterGrid from '$lib/components/LetterGrid.svelte';
 	import ProgressIndicator from '$lib/components/ProgressIndicator.svelte';
@@ -9,13 +9,18 @@
 	import PageLayout from '$lib/components/PageLayout.svelte';
 	import { AudioService } from '$lib/services/audio-service';
 
-	let language: 'ar' | 'ru' = 'ar';
+	let setId: 'ar' | 'ru' | 'ot' | 'fa' = 'ar';
 
 	$: {
 		const params = $page.params;
-		if (params.language === 'ar' || params.language === 'ru') {
-			language = params.language;
-			currentLanguage.set(language);
+		if (
+			params.language === 'ar' ||
+			params.language === 'ru' ||
+			params.language === 'ot' ||
+			params.language === 'fa'
+		) {
+			setId = params.language as 'ar' | 'ru' | 'ot' | 'fa';
+			currentSetId.set(setId);
 		} else {
 			// Invalid language parameter, redirect to home
 			goto('/');
@@ -30,14 +35,14 @@
 		// Stop any currently playing audio
 		const audioService = AudioService.getInstance();
 		audioService.stopAll();
-		goto('/quiz/' + language);
+		goto('/quiz/' + setId);
 	}
 
-	$: alphabet = getAlphabet(language);
+	$: alphabet = getAlphabet(setId);
 </script>
 
 <PageLayout
-	title={`${alphabet.name}${UI_TEXT.letters}`}
+	title={`${alphabet.name}`}
 	onBack={goBack}
 	rightContent="quiz-start"
 	onQuizStart={goToQuiz}
@@ -45,7 +50,7 @@
 	hasSidebar={true}
 >
 	<div slot="sidebar">
-		<ProgressIndicator {language} />
+		<ProgressIndicator {setId} />
 
 		<!-- Instructions -->
 		<div class="mt-6 rounded-lg border border-blue-200 bg-sky-50 p-4">
@@ -59,6 +64,6 @@
 	</div>
 
 	<div slot="main">
-		<LetterGrid {language} />
+		<LetterGrid {setId} />
 	</div>
 </PageLayout>

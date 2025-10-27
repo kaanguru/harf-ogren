@@ -16,14 +16,14 @@ export class QuizService {
 	private audioService: AudioService;
 
 	constructor() {
-		this.audioService = new AudioService();
+		this.audioService = AudioService.getInstance();
 	}
 
 	generateQuestion(
-		language: 'ar' | 'ru',
+		setId: 'ar' | 'ru' | 'ot' | 'fa',
 		difficulty: 'easy' | 'medium' | 'hard' = 'medium'
 	): QuizQuestion {
-		const alphabet = getAlphabet(language);
+		const alphabet = getAlphabet(setId);
 		const allLetters = alphabet.letters;
 
 		// Get correct letter
@@ -38,7 +38,7 @@ export class QuizService {
 		return {
 			correctLetter,
 			options,
-			audioFile: `/audio/letters/${language}/${getAudioFileName(language, correctLetter.id)}.mp3`
+			audioFile: `/audio/letters/${setId}/${getAudioFileName(setId, correctLetter.id)}.mp3`
 		};
 	}
 
@@ -88,8 +88,8 @@ export class QuizService {
 		return shuffled;
 	}
 
-	async playQuestionAudio(language: 'ar' | 'ru', letterId: string): Promise<void> {
-		await this.audioService.playLetterSound(letterId, language);
+	async playQuestionAudio(setId: 'ar' | 'ru' | 'ot' | 'fa', letterId: string): Promise<void> {
+		await this.audioService.playLetterSound(letterId, setId);
 	}
 
 	stopQuestionAudio(): void {
@@ -101,9 +101,9 @@ export class QuizService {
 	}
 
 	getNextQuestion(
-		language: 'ar' | 'ru',
+		setId: 'ar' | 'ru' | 'ot' | 'fa',
 		difficulty: 'easy' | 'medium' | 'hard' = 'medium'
 	): QuizQuestion {
-		return this.generateQuestion(language, difficulty);
+		return this.generateQuestion(setId, difficulty);
 	}
 }

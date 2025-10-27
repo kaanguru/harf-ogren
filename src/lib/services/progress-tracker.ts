@@ -34,16 +34,16 @@ export class ProgressTracker {
 		}
 	}
 
-	getProgress(language: 'ar' | 'ru'): UserProgress {
-		if (!this.progress || this.progress.language !== language) {
-			this.progress = createDefaultProgress(language);
+	getProgress(setId: 'ar' | 'ru' | 'ot' | 'fa'): UserProgress {
+		if (!this.progress || this.progress.setId !== setId) {
+			this.progress = createDefaultProgress(setId);
 			this.saveProgress();
 		}
 		return this.progress;
 	}
 
-	markLetterLearned(letterId: string, language: 'ar' | 'ru'): void {
-		const progress = this.getProgress(language);
+	markLetterLearned(letterId: string, setId: 'ar' | 'ru' | 'ot' | 'fa'): void {
+		const progress = this.getProgress(setId);
 
 		if (!progress.learnedLetters.includes(letterId)) {
 			progress.learnedLetters.push(letterId);
@@ -52,13 +52,13 @@ export class ProgressTracker {
 		}
 	}
 
-	getLearnedLetters(language: 'ar' | 'ru'): string[] {
-		const progress = this.getProgress(language);
+	getLearnedLetters(setId: 'ar' | 'ru' | 'ot' | 'fa'): string[] {
+		const progress = this.getProgress(setId);
 		return [...progress.learnedLetters];
 	}
 
-	resetProgress(language: 'ar' | 'ru'): void {
-		this.progress = createDefaultProgress(language);
+	resetProgress(setId: 'ar' | 'ru' | 'ot' | 'fa'): void {
+		this.progress = createDefaultProgress(setId);
 		this.saveProgress();
 	}
 
@@ -69,14 +69,14 @@ export class ProgressTracker {
 		this.progress = null;
 	}
 
-	getProgressPercentage(language: 'ar' | 'ru', totalLetters: number): number {
-		const progress = this.getProgress(language);
+	getProgressPercentage(setId: 'ar' | 'ru' | 'ot' | 'fa', totalLetters: number): number {
+		const progress = this.getProgress(setId);
 		if (totalLetters === 0) return 0;
 		return Math.round((progress.learnedLetters.length / totalLetters) * 100);
 	}
 
-	isLetterLearned(letterId: string, language: 'ar' | 'ru'): boolean {
-		const progress = this.getProgress(language);
+	isLetterLearned(letterId: string, setId: 'ar' | 'ru' | 'ot' | 'fa'): boolean {
+		const progress = this.getProgress(setId);
 		return progress.learnedLetters.includes(letterId);
 	}
 }

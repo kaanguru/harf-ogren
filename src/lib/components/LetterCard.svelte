@@ -7,7 +7,7 @@
 	import { Volume2, CheckCircle, Circle } from 'lucide-svelte';
 
 	export let letter: Letter;
-	export let language: 'ar' | 'ru';
+	export let setId: 'ar' | 'ru' | 'ot' | 'fa';
 
 	// Use a singleton instance to ensure audio stops properly between letters
 	const audioService = AudioService.getInstance();
@@ -16,7 +16,7 @@
 	async function playSound() {
 		isLoading = true;
 		try {
-			await audioService.playLetterSound(letter.id, language);
+			await audioService.playLetterSound(letter.id, setId);
 		} catch (error) {
 			console.error('Failed to play audio:', error);
 		} finally {
@@ -65,9 +65,9 @@
 	<!-- Status Badge -->
 	<div class="text-center">
 		{#if learned}
-			<CheckCircle size={16} class="text-sky-500 inline" />
+			<CheckCircle size={16} class="inline text-sky-500" />
 		{:else}
-			<Circle size={16} class="text-gray-400 inline" />
+			<Circle size={16} class="inline text-gray-400" />
 		{/if}
 	</div>
 

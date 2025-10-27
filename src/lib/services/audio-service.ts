@@ -31,18 +31,18 @@ export class AudioService {
 		}
 	}
 
-	async playLetterSound(letterId: string, language: 'ar' | 'ru'): Promise<void> {
+	async playLetterSound(letterId: string, setId: 'ar' | 'ru' | 'ot' | 'fa'): Promise<void> {
 		// Import the mapping function dynamically to avoid circular dependencies
 		const { getAudioFileName } = await import('$lib/models/alphabet-definition');
-		const audioFileName = getAudioFileName(language, letterId);
-		const audioPath = `/audio/letters/${language}/${audioFileName}.mp3`;
+		const audioFileName = getAudioFileName(setId, letterId);
+		const audioPath = `/audio/letters/${setId}/${audioFileName}.mp3`;
 
 		try {
 			await this.playAudio(audioPath);
 		} catch {
 			console.warn(`Audio file not found: ${audioPath}. Using fallback.`);
 			// Fallback: Use Web Speech API for pronunciation
-			await this.speakLetter(letterId, language);
+			await this.speakLetter(letterId, setId);
 		}
 	}
 
@@ -76,7 +76,7 @@ export class AudioService {
 		});
 	}
 
-	private async speakLetter(letterId: string, language: 'ar' | 'ru'): Promise<void> {
+	private async speakLetter(letterId: string, setId: 'ar' | 'ru' | 'ot' | 'fa'): Promise<void> {
 		// Ensure AudioContext is initialized before using speech synthesis
 		await this.ensureAudioContext();
 
@@ -89,10 +89,15 @@ export class AudioService {
 			const utterance = new SpeechSynthesisUtterance();
 
 			// Set language and text based on letter
-			if (language === 'ar') {
+			if (setId === 'ar' || setId === 'ot') {
+				// Arabic and Ottoman Turkish both use Arabic script and similar pronunciation
 				utterance.lang = 'ar-SA';
 				utterance.text = this.getArabicLetterName(letterId);
+			} else if (setId === 'fa') {
+				utterance.lang = 'fa-IR';
+				utterance.text = this.getPersianLetterName(letterId);
 			} else {
+				// Russian
 				utterance.lang = 'ru-RU';
 				utterance.text = this.getRussianLetterName(letterId);
 			}
@@ -177,6 +182,44 @@ export class AudioService {
 			e: 'э',
 			yu: 'ю',
 			ya: 'я'
+		};
+		return names[letterId] || letterId;
+	}
+
+	private getPersianLetterName(letterId: string): string {
+		const names: Record<string, string> = {
+			alef: 'الف',
+			beh: 'به',
+			pe: 'پ',
+			te: 'ت',
+			se: 'ث',
+			jim: 'جیم',
+			che: 'چ',
+			he: 'ه',
+			khe: 'خ',
+			dal: 'دال',
+			zal: 'ذال',
+			re: 'ر',
+			ze: 'ز',
+			jeh: 'ژ',
+			sin: 'سین',
+			shin: 'شین',
+			sad: 'صاد',
+			zad: 'ضاد',
+			ta: 'طاء',
+			za: 'ظاء',
+			ein: 'عین',
+			ghain: 'غین',
+			fe: 'ف',
+			qaf: 'قاف',
+			kaf: 'کاف',
+			gaf: 'گاف',
+			lam: 'لام',
+			mim: 'میم',
+			nun: 'نون',
+			vav: 'واو',
+			he2: 'ه',
+			ye: 'ی'
 		};
 		return names[letterId] || letterId;
 	}

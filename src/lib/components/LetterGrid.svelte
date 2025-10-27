@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { getAlphabet } from '$lib/models/alphabet-definition';
 	import LetterCard from './LetterCard.svelte';
-	import { currentLanguage } from '$lib/stores/progress.store';
+	import { currentSetId } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
 
-	export let language: 'ar' | 'ru';
+	export let setId: 'ar' | 'ru' | 'ot' | 'fa';
 
-	$: alphabet = getAlphabet(language);
+	$: alphabet = getAlphabet(setId);
 </script>
 
 <div class="letter-grid-container">
@@ -17,7 +17,7 @@
 
 	<div class="letter-grid grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 		{#each alphabet.letters as letter (letter.id)}
-			<LetterCard {letter} {language} />
+			<LetterCard {letter} {setId} />
 		{/each}
 	</div>
 </div>

@@ -2,7 +2,7 @@
 export const UI_TEXT = {
 	// App Title
 	appTitle: 'Harf Öğren',
-	appDescription: 'Arapça ve Rusça harfleri öğrenin',
+	appDescription: 'Arapça, Rusça, Osmanlı Türkçesi ve Farsça harfleri öğrenin',
 
 	// Navigation
 	home: 'Ana Sayfa',
@@ -13,10 +13,12 @@ export const UI_TEXT = {
 	selectLanguage: 'Dil Seçin',
 	arabic: 'Arapça',
 	russian: 'Rusça',
+	ottoman: 'Osmanlıca',
+	persian: 'Farsça',
 	startLearning: 'Öğrenmeye Başla',
 
 	// Learning Interface
-	letters: 'Harfler',
+	letters: 'Harf',
 	clickToHear: 'Dinlemek için tıklayın',
 	learned: 'Öğrenildi',
 	notLearned: 'Öğrenilmedi',
@@ -32,7 +34,7 @@ export const UI_TEXT = {
 	resetConfirm: 'İlerlemenizi sıfırlamak istediğinizden emin misiniz?',
 
 	// Actions
-	playSound: 'Sesi Çal',
+	playSound: 'Söyle',
 	back: 'Geri',
 	continue: 'Devam Et',
 

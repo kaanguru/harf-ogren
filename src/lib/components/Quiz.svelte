@@ -4,10 +4,17 @@
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { onMount } from 'svelte';
-	import { Volume2, RotateCcw } from 'lucide-svelte';
-	import confetti from 'canvas-confetti';
+	import { ArrowBigRightDash, RotateCcw } from 'lucide-svelte';
 
-	export let language: 'ar' | 'ru';
+	// Import canvas-confetti using dynamic import to avoid type issues
+	let confetti: any = null;
+
+	onMount(async () => {
+		const confettiModule = await import('canvas-confetti');
+		confetti = confettiModule;
+	});
+
+	export let setId: 'ar' | 'ru' | 'ot' | 'fa';
 	export let difficulty: 'easy' | 'medium' | 'hard' = 'medium';
 
 	const quizService = new QuizService();
@@ -23,7 +30,7 @@
 	const totalQuestionsInSet = 10; // Can be changed based on requirements
 
 	function initializeQuiz() {
-		currentQuestion = quizService.getNextQuestion(language, difficulty);
+		currentQuestion = quizService.getNextQuestion(setId, difficulty);
 		selectedOption = null;
 		isCorrect = null;
 		showResult = false;
@@ -53,14 +60,14 @@
 	function nextQuestion() {
 		// Stop any currently playing audio before loading next question
 		quizService.stopQuestionAudio();
-		
+
 		// Check if we've reached the end of the quiz set
 		if (questionsAnswered >= totalQuestionsInSet) {
 			quizCompleted = true;
 			// Trigger confetti for completing the quiz set
 			triggerFullConfetti();
 		} else {
-			currentQuestion = quizService.getNextQuestion(language, difficulty);
+			currentQuestion = quizService.getNextQuestion(setId, difficulty);
 			selectedOption = null;
 			isCorrect = null;
 			showResult = false;
@@ -72,7 +79,7 @@
 
 		isLoading = true;
 		try {
-			await quizService.playQuestionAudio(language, currentQuestion.correctLetter.id);
+			await quizService.playQuestionAudio(setId, currentQuestion.correctLetter.id);
 		} catch (error) {
 			console.error('Failed to play audio:', error);
 		} finally {
@@ -96,66 +103,60 @@
 		return 'bg-orange-100 border-gray-200 text-gray-500';
 	}
 
-	function triggerFullConfetti() {
+	async function triggerFullConfetti() {
 		// Play the celebration sound for completing the set
 		playSetCompletionSound();
-		
+
 		// More elaborate confetti for completing a set
-		confetti({
-			particleCount: 300,
-			spread: 180,
-			origin: { y: 0.6 },
-			startVelocity: 50,
-			gravity: 0.5,
-			drift: -0.5,
-			ticks: 200,
-			zIndex: 1000,
-			colors: [
-				'#780000', // barn-red
-				'#c1121f', // fire-brick
-				'#fdf0d5', // papaya-whip
-				'#669bbc', // air-superiority-blue
-				'#003049', // prussian-blue
-				'#2a9d8f', // teal
-				'#e9c46a', // golden
-				'#f4a261'  // orange
-			]
-		});
-		
+		if (confetti) {
+			await confetti({
+				particleCount: 300,
+				spread: 180,
+				origin: { y: 0.6 },
+				startVelocity: 50,
+				gravity: 0.5,
+				drift: -0.5,
+				ticks: 200,
+				zIndex: 1000,
+				colors: [
+					'#780000', // barn-red
+					'#c1121f', // fire-brick
+					'#fdf0d5', // papaya-whip
+					'#669bbc', // air-superiority-blue
+					'#003049', // prussian-blue
+					'#2a9d8f', // teal
+					'#e9c46a', // golden
+					'#f4a261' // orange
+				]
+			});
+		}
+
 		// Add a second burst for more effect
-		setTimeout(() => {
-			confetti({
-				particleCount: 150,
-				angle: 60,
-				spread: 70,
-				origin: { x: 0 },
-				colors: [
-					'#780000', 
-					'#c1121f', 
-					'#fdf0d5', 
-					'#669bbc', 
-					'#003049'
-				]
-			});
+		setTimeout(async () => {
+			if (confetti) {
+				await confetti({
+					particleCount: 150,
+					angle: 60,
+					spread: 70,
+					origin: { x: 0 },
+					colors: ['#780000', '#c1121f', '#fdf0d5', '#669bbc', '#003049']
+				});
+			}
 		}, 150);
-		
-		setTimeout(() => {
-			confetti({
-				particleCount: 150,
-				angle: 120,
-				spread: 70,
-				origin: { x: 1 },
-				colors: [
-					'#780000', 
-					'#c1121f', 
-					'#fdf0d5', 
-					'#669bbc', 
-					'#003049'
-				]
-			});
+
+		setTimeout(async () => {
+			if (confetti) {
+				await confetti({
+					particleCount: 150,
+					angle: 120,
+					spread: 70,
+					origin: { x: 1 },
+					colors: ['#780000', '#c1121f', '#fdf0d5', '#669bbc', '#003049']
+				});
+			}
 		}, 300);
 	}
-	
+
 	function playSetCompletionSound() {
 		const audio = new Audio('/audio/confetti-fade-in.mp3');
 		audio.play().catch((error) => {
@@ -175,11 +176,35 @@
 <div class="quiz-container mx-auto max-w-2xl p-6">
 	<!-- Quiz Header -->
 	<div class="mb-8 text-center">
-		<div class="flex justify-center gap-4 text-sm text-gray-600">
-			<span>Skor: {score}/{questionsAnswered}</span>
-			<span
-				>Zorluk: {difficulty === 'easy' ? 'Kolay' : difficulty === 'medium' ? 'Orta' : 'Zor'}</span
-			>
+		<!-- Score and Progress Display -->
+		<div class="mb-4">
+			{#if questionsAnswered > 0}
+				<div class="mb-1 text-2xl font-bold text-sky-950">
+					{score} / {questionsAnswered}
+				</div>
+
+				<!-- Progress bar -->
+				<div class="h-2.5 w-full rounded-full bg-gray-200">
+					<div
+						class="h-2.5 rounded-full bg-sky-950 transition-all duration-500 ease-in-out"
+						style="width: {questionsAnswered > 0
+							? Math.min(100, (score / questionsAnswered) * 100)
+							: 0}%"
+					></div>
+				</div>
+			{/if}
+		</div>
+
+		<!-- Difficulty Indicator -->
+		<div
+			class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium
+			{difficulty === 'easy'
+				? 'bg-green-100 text-green-800'
+				: difficulty === 'medium'
+					? 'bg-yellow-100 text-yellow-800'
+					: 'bg-red-100 text-red-800'}"
+		>
+			<span>{difficulty === 'easy' ? 'Kolay' : difficulty === 'medium' ? 'Orta' : 'Zor'}</span>
 		</div>
 	</div>
 
@@ -198,9 +223,8 @@
 							class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
 						></div>
 					{:else}
-						<Volume2 class="h-5 w-5" />
+						<RotateCcw class="h-4 w-4" />
 					{/if}
-					{UI_TEXT.playSound}
 				</button>
 			</div>
 
@@ -224,11 +248,28 @@
 				<div class="mt-6 text-center">
 					{#if quizCompleted}
 						<div class="mb-6">
-							<div class="text-2xl font-bold text-sky-600 mb-2">🎉 Tebrikler!</div>
-							<div class="text-lg text-gray-700 mb-2">Quiz Setini Tamamladınız!</div>
-							<div class="text-md text-gray-600">
-								Skor: {score}/{totalQuestionsInSet} ({Math.round((score/totalQuestionsInSet)*100)}%)
+							<div class="mb-2 text-2xl font-bold text-sky-600">🎉 Tebrikler!</div>
+							<div class="mb-2 text-lg text-gray-700">Quiz Setini Tamamladınız!</div>
+
+							<!-- Final Score Display -->
+							<div class="mb-4 rounded-lg border border-sky-200 bg-sky-50 p-4">
+								<div class="mb-2 text-center text-xl font-bold text-sky-950">Nihai Skor</div>
+								<div class="mb-2 text-center text-3xl font-bold text-sky-700">
+									{score}/{totalQuestionsInSet}
+								</div>
+								<div class="text-center text-lg text-sky-600">
+									({Math.round((score / totalQuestionsInSet) * 100)}%)
+								</div>
+
+								<!-- Final Progress Bar -->
+								<div class="mt-3 h-3 w-full rounded-full bg-gray-200">
+									<div
+										class="h-3 rounded-full bg-sky-950"
+										style="width: {Math.round((score / totalQuestionsInSet) * 100)}%"
+									></div>
+								</div>
 							</div>
+
 							<button
 								on:click={initializeQuiz}
 								class="mt-4 inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-3 text-white transition-colors hover:bg-sky-700"
@@ -239,20 +280,37 @@
 						</div>
 					{:else}
 						{#if isCorrect}
-							<div class="mb-4 text-lg font-semibold text-sky-500">✓ Doğru! Tebrikler!</div>
+							<div class="mb-4 text-lg font-semibold text-sky-500">✓ Tebrikler!</div>
 						{:else}
-							<div class="mb-4 text-lg font-semibold text-red-600">
-								✗ Yanlış! Doğru cevap: {currentQuestion.correctLetter.symbol} ({currentQuestion
-									.correctLetter.name})
+							<div class="mb-4 text-lg font-semibold text-red-600">✗ Yanlış!</div>
+							<div class="my-3 text-sm text-gray-600">
+								Doğru cevap: <span class="text-3xl text-amber-900">
+									{currentQuestion.correctLetter.symbol}</span
+								>
+								{currentQuestion.correctLetter.name}
 							</div>
 						{/if}
+
+						<!-- Current score during quiz -->
+						<!-- <div class="mb-4 rounded-lg bg-gray-50 p-3">
+							<div class="text-center text-gray-700">
+								Güncel Skor: <span class="font-bold text-sky-950">{score}/{questionsAnswered}</span>
+							</div>
+							<div class="mt-2 h-2 w-full rounded-full bg-gray-200">
+								<div
+									class="h-2 rounded-full bg-sky-700"
+									style="width: {questionsAnswered > 0
+										? Math.round((score / questionsAnswered) * 100)
+										: 0}%"
+								></div>
+							</div>
+						</div> -->
 
 						<button
 							on:click={nextQuestion}
 							class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
 						>
-							<RotateCcw class="h-4 w-4" />
-							Sonraki Soru
+							<ArrowBigRightDash class="h-5 w-5" />
 						</button>
 					{/if}
 				</div>

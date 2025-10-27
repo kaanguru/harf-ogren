@@ -6,12 +6,12 @@ export interface Letter {
 }
 
 export interface Alphabet {
-	id: 'ar' | 'ru';
+	id: 'ar' | 'ru' | 'ot' | 'fa';
 	name: string;
 	letters: Letter[];
 }
 
-export const alphabets: Record<'ar' | 'ru', Alphabet> = {
+export const alphabets: Record<'ar' | 'ru' | 'ot' | 'fa', Alphabet> = {
 	ar: {
 		id: 'ar',
 		name: 'Arapça',
@@ -84,22 +84,101 @@ export const alphabets: Record<'ar' | 'ru', Alphabet> = {
 			{ id: 'yu', symbol: 'Ю', name: 'Yu' },
 			{ id: 'ya', symbol: 'Я', name: 'Ya' }
 		]
+	},
+	ot: {
+		id: 'ot',
+		name: 'Osmanlıca',
+		letters: [
+			// Ottoman Turkish letters
+			{ id: 'alef', symbol: 'ا', name: 'Alef' },
+			{ id: 'beh', symbol: 'ب', name: 'Beh' },
+			{ id: 'pe', symbol: 'پ', name: 'Pe' },
+			{ id: 'te', symbol: 'ت', name: 'Te' },
+			{ id: 'se', symbol: 'ث', name: 'Se' },
+			{ id: 'jeem', symbol: 'ج', name: 'Cim' },
+			{ id: 'hah', symbol: 'ح', name: 'Hah' },
+			{ id: 'khah', symbol: 'خ', name: 'Hı' },
+			{ id: 'dal', symbol: 'د', name: 'Dal' },
+			{ id: 'dhal', symbol: 'ذ', name: 'Zel' },
+			{ id: 're', symbol: 'ر', name: 'Re' },
+			{ id: 'ze', symbol: 'ز', name: 'Ze' },
+			{ id: 'je', symbol: 'ژ', name: 'Je' },
+			{ id: 'seen', symbol: 'س', name: 'Sin' },
+			{ id: 'sheen', symbol: 'ش', name: 'Şin' },
+			{ id: 'sad', symbol: 'ص', name: 'Sad' },
+			{ id: 'dad', symbol: 'ض', name: 'Dad' },
+			{ id: 'tah', symbol: 'ط', name: 'Tah' },
+			{ id: 'zah', symbol: 'ظ', name: 'Zah' },
+			{ id: 'ain', symbol: 'ع', name: 'Ayn' },
+			{ id: 'ghain', symbol: 'غ', name: 'Gayn' },
+			{ id: 'fe', symbol: 'ف', name: 'Fe' },
+			{ id: 'qaf', symbol: 'ق', name: 'Kaf' },
+			{ id: 'kaf', symbol: 'ك', name: 'Kef' },
+			{ id: 'gaf', symbol: 'گ', name: 'Gaf' },
+			{ id: 'lam', symbol: 'ل', name: 'Lam' },
+			{ id: 'mim', symbol: 'م', name: 'Mim' },
+			{ id: 'nun', symbol: 'ن', name: 'Nun' },
+			{ id: 'vav', symbol: 'و', name: 'Vav' },
+			{ id: 'he', symbol: 'ه', name: 'He' },
+			{ id: 'ye', symbol: 'ي', name: 'Ye' },
+			{ id: 'che', symbol: 'چ', name: 'Çe' },
+			{ id: 'she', symbol: 'ش', name: 'Şe' }
+		]
+	},
+	fa: {
+		id: 'fa',
+		name: 'Farsça',
+		letters: [
+			// Persian letters
+			{ id: 'alef', symbol: 'ا', name: 'Alef' },
+			{ id: 'beh', symbol: 'ب', name: 'Be' },
+			{ id: 'pe', symbol: 'پ', name: 'Pe' },
+			{ id: 'te', symbol: 'ت', name: 'Te' },
+			{ id: 'se', symbol: 'ث', name: 'Se' },
+			{ id: 'jim', symbol: 'ج', name: 'Jim' },
+			{ id: 'che', symbol: 'چ', name: 'Çe' },
+			{ id: 'he', symbol: 'ح', name: 'He' },
+			{ id: 'khe', symbol: 'خ', name: 'kHe' }, // Khe is pronounced like 'khe' in Persian
+			{ id: 'dal', symbol: 'د', name: 'Dal' },
+			{ id: 'zal', symbol: 'ذ', name: 'Zal' },
+			{ id: 're', symbol: 'ر', name: 'Re' },
+			{ id: 'ze', symbol: 'ز', name: 'Ze' },
+			{ id: 'jeh', symbol: 'ژ', name: 'Je' },
+			{ id: 'sin', symbol: 'س', name: 'Sin' },
+			{ id: 'shin', symbol: 'ش', name: 'Şin' },
+			{ id: 'sad', symbol: 'ص', name: 'Sad' },
+			{ id: 'zad', symbol: 'ض', name: 'Zad' },
+			{ id: 'ta', symbol: 'ط', name: 'Ta' },
+			{ id: 'za', symbol: 'ظ', name: 'Za' },
+			{ id: 'ein', symbol: 'ع', name: 'Ein' },
+			{ id: 'ghain', symbol: 'غ', name: 'Geyn' },
+			{ id: 'fe', symbol: 'ف', name: 'Fe' },
+			{ id: 'qaf', symbol: 'ق', name: 'Kaf' },
+			{ id: 'kaf', symbol: 'ک', name: 'Kaf' }, // Persian kaf
+			{ id: 'gaf', symbol: 'گ', name: 'Gaf' },
+			{ id: 'lam', symbol: 'ل', name: 'Lam' },
+			{ id: 'mim', symbol: 'م', name: 'Mim' },
+			{ id: 'nun', symbol: 'ن', name: 'Nun' },
+			{ id: 'vav', symbol: 'و', name: 'Vav' },
+			{ id: 'he2', symbol: 'ه', name: 'He' },
+			{ id: 'ye', symbol: 'ی', name: 'Ye' } // Persian ye
+		]
 	}
 };
 
-export function getAlphabet(language: 'ar' | 'ru'): Alphabet {
-	return alphabets[language];
+export function getAlphabet(setId: 'ar' | 'ru' | 'ot' | 'fa'): Alphabet {
+	return alphabets[setId];
 }
 
-export function getLetter(language: 'ar' | 'ru', letterId: string): Letter | undefined {
-	return alphabets[language].letters.find((letter) => letter.id === letterId);
+export function getLetter(setId: 'ar' | 'ru' | 'ot' | 'fa', letterId: string): Letter | undefined {
+	return alphabets[setId].letters.find((letter) => letter.id === letterId);
 }
 
-export function getTotalLetters(language: 'ar' | 'ru'): number {
-	return alphabets[language].letters.length;
+export function getTotalLetters(setId: 'ar' | 'ru' | 'ot' | 'fa'): number {
+	return alphabets[setId].letters.length;
 }
 
-export function getAudioFileName(language: 'ar' | 'ru', letterId: string): string {
+export function getAudioFileName(setId: 'ar' | 'ru' | 'ot' | 'fa', letterId: string): string {
 	const audioFileMap: Record<string, Record<string, string>> = {
 		ar: {
 			alif: '001-alif',
@@ -166,8 +245,79 @@ export function getAudioFileName(language: 'ar' | 'ru', letterId: string): strin
 			e: '31-e',
 			yu: '32-yu',
 			ya: '33-ya'
+		},
+		ot: {
+			// Ottoman Turkish letters use numeric prefixes like 01-alef, 02-beh, etc.
+			alef: '01-alef',
+			beh: '02-beh',
+			pe: '03-pe',
+			te: '04-te',
+			se: '05-se',
+			jeem: '06-jeem',
+			hah: '07-hah',
+			khah: '08-khah',
+			dal: '09-dal',
+			dhal: '10-dhal',
+			re: '11-re',
+			ze: '12-ze',
+			je: '13-je',
+			seen: '14-seen',
+			sheen: '15-sheen',
+			sad: '16-sad',
+			dad: '17-dad',
+			tah: '18-tah',
+			zah: '19-zah',
+			ain: '20-ain',
+			ghain: '21-ghain',
+			fe: '22-fe',
+			qaf: '23-qaf',
+			kaf: '24-kaf',
+			gaf: '25-gaf',
+			lam: '26-lam',
+			mim: '27-mim',
+			nun: '28-nun',
+			vav: '29-vav',
+			he: '30-he',
+			ye: '31-ye',
+			che: '32-che',
+			she: '33-she'
+		},
+		fa: {
+			// Persian letters use numeric prefixes like 01-alef, 02-beh, etc.
+			alef: '01-alef',
+			beh: '02-be',
+			pe: '03-pe',
+			te: '04-te',
+			se: '05-se',
+			jim: '06-jim',
+			che: '07-che',
+			he: '08-he',
+			khe: '09-khe',
+			dal: '10-dal',
+			zal: '11-zal',
+			re: '12-re',
+			ze: '13-ze',
+			jeh: '14-zhe',
+			sin: '15-sin',
+			shin: '16-shin',
+			sad: '17-sad',
+			zad: '18-zad',
+			ta: '19-ta',
+			za: '20-za',
+			ein: '21-ein',
+			ghain: '22-ghin',
+			fe: '23-fe',
+			qaf: '24-qāf',
+			kaf: '25-kāf',
+			gaf: '26-gāf',
+			lam: '27-lam',
+			mim: '28-mīm',
+			nun: '29-nūn',
+			vav: '30-vāv',
+			he2: '31-he',
+			ye: '32-ye'
 		}
 	};
 
-	return audioFileMap[language]?.[letterId] || letterId;
+	return audioFileMap[setId]?.[letterId] || letterId;
 }

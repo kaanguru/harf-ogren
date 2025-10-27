@@ -1,12 +1,12 @@
 export interface UserProgress {
-	language: 'ar' | 'ru';
+	setId: 'ar' | 'ru' | 'ot' | 'fa';
 	learnedLetters: string[];
 	lastActive: string;
 }
 
-export function createDefaultProgress(language: 'ar' | 'ru'): UserProgress {
+export function createDefaultProgress(setId: 'ar' | 'ru' | 'ot' | 'fa'): UserProgress {
 	return {
-		language,
+		setId,
 		learnedLetters: [],
 		lastActive: new Date().toISOString()
 	};
