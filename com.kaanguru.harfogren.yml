@@ -1,0 +1,45 @@
+Categories:
+  - Education
+  - Kids
+License: MIT
+AuthorName: Kaan Guru
+AuthorEmail: kaangurudev@gmail.com
+WebSite: https://harf-ogren.netlify.app
+SourceCode: https://github.com/kaanguru/harf-ogren
+IssueTracker: https://github.com/kaanguru/harf-ogren/issues
+Changelog: https://github.com/kaanguru/harf-ogren/releases
+
+AutoName: Harf Öğren
+Summary: Learn Arabic & Russian Alphabets
+Description: |-
+  Learn Arabic and Russian alphabets through interactive lessons and quizzes.
+  .
+  Features:
+  * Interactive lessons for Arabic and Russian alphabets
+  * Audio pronunciation for each letter
+  * Visual learning with interactive letter grids
+  * Progress tracking to monitor your learning journey
+  * Offline capability - learn anywhere without internet
+  * Mobile-optimized design for the best learning experience
+  * Free and open-source educational tool
+
+RepoType: git
+Repo: https://github.com/kaanguru/harf-ogren.git
+
+Builds:
+  - versionName: '1.0.0'
+    versionCode: 1
+    commit: v1.0.0
+    subdir: android
+    gradle:
+      - yes
+    prebuild:
+      - npm install -g @bubblewrap/cli
+      - bubblewrap update
+    scandelete:
+      - build
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1
