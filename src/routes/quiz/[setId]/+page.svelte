@@ -38,7 +38,7 @@
 </script>
 
 <PageLayout
-	title={`${alphabet.name} Quiz`}
+	title={`${alphabet.name}`}
 	onBack={goBack}
 	rightContent="difficulty-selector"
 	{difficulty}

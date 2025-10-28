@@ -4,10 +4,11 @@
 	import { markLetterLearned } from '$lib/stores/progress.store';
 	import { UI_TEXT } from '$lib/utils/constants';
 	import { onMount } from 'svelte';
-	import { ArrowBigRightDash, RotateCcw } from 'lucide-svelte';
+	import { ArrowBigRightDash, BrainCircuit, RotateCcw } from 'lucide-svelte';
 
 	// Import canvas-confetti using dynamic import to avoid type issues
 	let confetti: any = null;
+	let autoAdvanceTimer: number | null = null;
 
 	onMount(async () => {
 		const confettiModule = await import('canvas-confetti');
@@ -26,6 +27,7 @@
 	let questionsAnswered = 0;
 	let showResult = false;
 	let quizCompleted = false;
+	let countdown: number | null = null;
 	// Set a fixed number of questions for a quiz session
 	const totalQuestionsInSet = 10; // Can be changed based on requirements
 
@@ -55,9 +57,27 @@
 
 		questionsAnswered++;
 		showResult = true;
+
+		// Auto-advance to next question after 4 seconds if the answer was correct
+		if (isCorrect && !quizCompleted) {
+			clearAutoAdvanceTimer();
+			countdown = 4; // Start countdown from 4 seconds
+
+			// Set up countdown interval
+			autoAdvanceTimer = window.setInterval(() => {
+				countdown = countdown ? countdown - 1 : null;
+				if (countdown === 0) {
+					clearAutoAdvanceTimer();
+					nextQuestion();
+				}
+			}, 1000);
+		}
 	}
 
 	function nextQuestion() {
+		// Clear the auto-advance timer if it exists
+		clearAutoAdvanceTimer();
+
 		// Stop any currently playing audio before loading next question
 		quizService.stopQuestionAudio();
 
@@ -72,6 +92,14 @@
 			isCorrect = null;
 			showResult = false;
 		}
+	}
+
+	function clearAutoAdvanceTimer() {
+		if (autoAdvanceTimer) {
+			clearInterval(autoAdvanceTimer);
+			autoAdvanceTimer = null;
+		}
+		countdown = null;
 	}
 
 	async function playQuestionAudio() {
@@ -166,6 +194,10 @@
 
 	onMount(() => {
 		initializeQuiz();
+		return () => {
+			// Clear timer when component is destroyed
+			clearAutoAdvanceTimer();
+		};
 	});
 
 	$: if (currentQuestion && !showResult) {
@@ -275,7 +307,8 @@
 								class="mt-4 inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-3 text-white transition-colors hover:bg-sky-700"
 							>
 								<RotateCcw class="h-5 w-5" />
-								Yeni Quiz Başlat
+								<BrainCircuit />
+								Yeni Quiz
 							</button>
 						</div>
 					{:else}
@@ -306,12 +339,20 @@
 							</div>
 						</div> -->
 
-						<button
-							on:click={nextQuestion}
-							class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
-						>
-							<ArrowBigRightDash class="h-5 w-5" />
-						</button>
+						{#if isCorrect && countdown !== null}
+							<div class="mb-4">
+								<div class="text-lg font-semibold text-sky-500">
+									Sıradaki soruya {countdown} saniye içinde geçiliyor...
+								</div>
+							</div>
+						{:else}
+							<button
+								on:click={nextQuestion}
+								class="inline-flex items-center gap-2 rounded-lg bg-sky-950 px-6 py-2 text-white transition-colors hover:bg-sky-700"
+							>
+								<ArrowBigRightDash class="h-5 w-5" />
+							</button>
+						{/if}
 					{/if}
 				</div>
 			{/if}

@@ -41,10 +41,10 @@
 							</p>
 						</div>
 						<div class="text-3xl text-sky-950">
-							{#if key === 'ar'}
-								<span class="font-arabic">ا</span>
-							{:else}
+							{#if key === 'ru'}
 								<span class="font-cyrillic">А</span>
+							{:else}
+								<span class="font-arabic">ا</span>
 							{/if}
 						</div>
 					</div>

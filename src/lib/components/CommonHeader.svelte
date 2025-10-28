@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowLeft } from 'lucide-svelte';
+	import { ArrowLeft, BrainCircuit } from 'lucide-svelte';
 
 	export let title: string;
 	export let onBack: () => void;
@@ -22,9 +22,9 @@
 			</button>
 
 			<!-- Page Title -->
-			<h1 class="text-xl font-semibold text-gray-800">
+			<h2 class="font-semibold text-gray-800 sm:text-sm md:text-lg">
 				{title}
-			</h1>
+			</h2>
 
 			<!-- Right Content -->
 			{#if rightContent === 'quiz-start'}
@@ -33,20 +33,8 @@
 					class="flex items-center gap-2 rounded-lg bg-sky-950 px-4 py-2 text-white transition-colors hover:bg-sky-700"
 					on:click={() => onQuizStart && onQuizStart()}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-4 w-4"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path d="M2 12 C2 12 5 8 12 8 C19 8 22 12 22 12 C22 12 19 16 12 16 C5 16 2 12 2 12 Z" />
-						<path
-							d="M12 15 C13.6569 15 15 13.6569 15 12 C15 10.3431 13.6569 9 12 9 C10.3431 9 9 10.3431 9 12 C9 13.6569 10.3431 15 12 15 Z"
-						/>
-					</svg>
-					Quiz'e Başla
+					<BrainCircuit />
+					Quiz
 				</button>
 			{:else if rightContent === 'difficulty-selector'}
 				<!-- Difficulty Selector for Quiz Mode -->

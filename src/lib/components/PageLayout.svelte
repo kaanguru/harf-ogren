@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CommonHeader from './CommonHeader.svelte';
-	
+
 	export let title: string;
 	export let onBack: () => void;
 	export let rightContent: 'quiz-start' | 'difficulty-selector' = 'quiz-start';
@@ -12,14 +12,7 @@
 
 <div class="min-h-screen bg-orange-50">
 	<!-- Header -->
-	<CommonHeader
-		{title}
-		{onBack}
-		{rightContent}
-		{difficulty}
-		{onDifficultyChange}
-		{onQuizStart}
-	/>
+	<CommonHeader {title} {onBack} {rightContent} {difficulty} {onDifficultyChange} {onQuizStart} />
 
 	<!-- Main Content -->
 	<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
